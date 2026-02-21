@@ -24,3 +24,19 @@ grep MemTotal /proc/meminfo
 echo ""
 echo "===== CPU threads ====="
 nproc
+
+
+echo "===== GPU ====="
+lspci | grep -i vga
+
+echo ""
+echo "===== GPU detail (if NVIDIA) ====="
+nvidia-smi 2>/dev/null || echo "NVIDIA driver not installed or not NVIDIA GPU"
+
+echo ""
+echo "===== TOTAL RAM ====="
+grep MemTotal /proc/meminfo
+
+echo ""
+echo "===== CPU threads ====="
+nproc
