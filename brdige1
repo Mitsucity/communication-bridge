@@ -8,3 +8,19 @@ virt-install \
 --os-variant ubuntu20.04 \
 --network network=default \
 --graphics vnc
+
+
+echo "===== GPU ====="
+lspci | grep -i vga
+
+echo ""
+echo "===== GPU detail (if NVIDIA) ====="
+nvidia-smi 2>/dev/null || echo "NVIDIA driver not installed or not NVIDIA GPU"
+
+echo ""
+echo "===== TOTAL RAM ====="
+grep MemTotal /proc/meminfo
+
+echo ""
+echo "===== CPU threads ====="
+nproc
