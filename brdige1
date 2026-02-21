@@ -1,0 +1,10 @@
+virt-install \
+--name cml \
+--ram 16000 \
+--vcpus 8 \
+--disk size=200 \
+--cdrom /path/to/refplat.iso \
+--os-type linux \
+--os-variant ubuntu20.04 \
+--network network=default \
+--graphics vnc
