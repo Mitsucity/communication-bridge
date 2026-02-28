@@ -62,3 +62,32 @@ mitsuntu@mitsuntuormation.
 
 note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
 hint: See PEP 668 for the detailed specification.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+itsuntu@mitsuntu-FRONTIER:~/Documents/ansible-lab$ ansible-playbook -i hosts change.yml
+[WARNING]: Unable to parse /home/mitsuntu/Documents/ansible-lab/hosts as an
+inventory source
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[WARNING]: Could not match supplied host pattern, ignoring: local
+
+PLAY [Simple local change] *****************************************************
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+mitsuntu@mitsuntu-FRONTIER:~/Documents/ansible-lab$ 
