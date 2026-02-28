@@ -183,7 +183,7 @@ virt-install \
 --network network=default \
 --graphics vnc
 
-
+mitsuntuubuntu@gmail.com
 echo "===== GPU ====="
 lspci | grep -i vga
 
@@ -473,3 +473,5 @@ nvme0n1     disk   1.9T                                         INTEL SSDPEKNU02
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/nvme0n1p5  429G   75G  333G  19% /
 mitsuntu@mitsuntu-FRONTIER:~$ 
+
+mitsuntuubuntu@gmail.com
