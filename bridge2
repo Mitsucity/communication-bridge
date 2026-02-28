@@ -177,3 +177,35 @@ network:
       dhcp4: true
 mitsuntu@mitsuntu-FRONTIER:~$ 
 
+
+
+🌉 CML用ブリッジ作成（安全ルート）
+① ブリッジ作る
+sudo nmcli connection add type bridge ifname br0 con-name br0
+② enp4s0をブリッジに参加させる
+sudo nmcli connection add type bridge-slave ifname enp4s0 master br0
+③ br0をDHCPにする
+sudo nmcli connection modify br0 ipv4.method auto
+
+IPv6も必要なら：
+
+sudo nmcli connection modify br0 ipv6.method auto
+④ 古い接続を無効化
+
+今 enp4s0 は
+
+CONNECTION: netplan-enp4s0
+
+これを落とす。
+
+sudo nmcli connection down netplan-enp4s0
+⑤ br0を有効化
+sudo nmcli connection up br0
+🔎 成功するとこうなる
+ip a
+
+理想：
+
+br0      → 192.168.100.xxx
+enp4s0   → IPなし
+
