@@ -144,3 +144,36 @@ mitsuntu@mitsuntu-FRONTIER:~$ ip a
 mitsuntu@mitsuntu-FRONTIER:~$ 
 
 
+
+
+
+
+mitsuntu@mitsuntu-FRONTIER:~$ ls /etc/netplam
+ls: cannot access '/etc/netplam': No such file or directory
+mitsuntu@mitsuntu-FRONTIER:~$ ls /etc/netplan
+01-network-manager-all.yaml  50-cloud-init.yaml
+mitsuntu@mitsuntu-FRONTIER:~$ 
+mitsuntu@mitsuntu-FRONTIER:~$ 
+mitsuntu@mitsuntu-FRONTIER:~$ nmcli device status
+DEVICE  TYPE      STATE                   CONNECTION     
+enp4s0  ethernet  connected               netplan-enp4s0 
+lo      loopback  connected (externally)  lo             
+virbr0  bridge    connected (externally)  virbr0         
+mitsuntu@mitsuntu-FRONTIER:~$ more /etc/netplan/01-network-manager-all.yaml 
+# Let NetworkManager manage all devices on this system
+network:
+  version: 2
+  renderer: NetworkManager
+mitsuntu@mitsuntu-FRONTIER:~$ more /etc/netplan/50-cloud-init.yaml 
+more: cannot open /etc/netplan/50-cloud-init.yaml: Permission denied
+mitsuntu@mitsuntu-FRONTIER:~$ sudo more /etc/netplan/50-cloud-init.yaml 
+[sudo] password for mitsuntu: 
+Sorry, try again.
+[sudo] password for mitsuntu: 
+network:
+  version: 2
+  ethernets:
+    enp4s0:
+      dhcp4: true
+mitsuntu@mitsuntu-FRONTIER:~$ 
+
