@@ -7,3 +7,6 @@ Description:	Ubuntu 24.04.4 LTS
 Release:	24.04
 Codename:	noble
 mitsuntu@mitsuntu-FRONTIER
+
+
+sudo apt update && sudo apt install default-jdk python3 make gcc libxml2-utils xsltproc openssl libncurses6 -y
