@@ -113,3 +113,6 @@ mitsuntu@mitsuntu-FRONTIER:~/Documents/ansible-lab$ more hosts
 [local]
 localhost ansbile_connection=local
 mitsuntu@mitsuntu-FRONTIER:~/Documents/ansible-lab$ 
+
+
+sudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients virtinst bridge-utils
