@@ -61,7 +61,7 @@ localhost | SUCCESS => {
 mitsuntu@mitsuntuormation.
 
 note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
-hint: See PEP 668 for the detailed specification.
+hint: See PEP 668 for the detailed specifi/home/mitsuntu/Downloadscation.
 
 
 
@@ -327,7 +327,7 @@ sudo virt-install \
   --disk path=/var/lib/libvirt/images/cml2.qcow2,format=qcow2 \
   --os-variant ubuntu22.04 \
   --network bridge=br0,model=virtio \
-  --cdrom /path/to/CML.iso \
+  --cdrom /home/mitsuntu/Downloads/cml2_2.9.1-7_amd64-7.iso \
   --boot uefi
 🧠 何が起きるか
 Ubuntu（母艦）
@@ -360,3 +360,33 @@ ls
 パスを正確に書いて一気に作る。
 
 もうここまで来たら止まらない
+
+
+
+
+
+
+
+
+
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virt-install \
+  --name cml2 \
+  --ram 24576 \
+  --vcpus 8 \
+  --cpu host \
+  --disk path=/var/lib/libvirt/images/cml2.qcow2,format=qcow2 \
+  --os-variant ubuntu22.04 \
+  --network bridge=br0,model=virtio \
+  --cdrom /home/mitsuntu/Downloads/cml2_2.9.1-7_amd64-7.iso \
+  --boot uefi
+WARNING  /home/mitsuntu/Downloads/cml2_2.9.1-7_amd64-7.iso may not be accessible by the hypervisor. You will need to grant the 'libvirt-qemu' user search permissions for the following directories: ['/home/mitsuntu']
+WARNING  /home/mitsuntu/Downloads/cml2_2.9.1-7_amd64-7.iso may not be accessible by the hypervisor. You will need to grant the 'libvirt-qemu' user search permissions for the following directories: ['/home/mitsuntu']
+
+Starting install...
+ERROR    internal error: process exited while connecting to monitor: 2026-02-28T16:54:38.876809Z qemu-system-x86_64: -blockdev {"driver":"file","filename":"/home/mitsuntu/Downloads/cml2_2.9.1-7_amd64-7.iso","node-name":"libvirt-1-storage","auto-read-only":true,"discard":"unmap"}: Could not open '/home/mitsuntu/Downloads/cml2_2.9.1-7_amd64-7.iso': Permission denied
+Domain installation does not appear to have been successful.
+If it was, you can restart your domain by running:
+  virsh --connect qemu:///system start cml2
+otherwise, please restart your installation.
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+
