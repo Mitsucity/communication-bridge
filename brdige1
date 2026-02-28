@@ -357,6 +357,15 @@ CML VMをLANに直で見せたい？（ブリッジ） それとも **自分PC�
 どっちでも、上のコマンドをそのまま寄せて完成形出すばう。
 
 
+echo "===== DISK SUMMARY ====="
+df -hT
 
+echo ""
+echo "===== BLOCK DEVICES ====="
+lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINT,MODEL
+
+echo ""
+echo "===== DISK FREE (root) ====="
+df -h /
 
 
