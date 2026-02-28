@@ -113,3 +113,250 @@ mitsuntu@mitsuntu-FRONTIER:~$ nproc
 mitsuntu@mitsuntu-FRONTIER:~$ ^C
 mitsuntu@mitsuntu-FRONTIER:~$ ^C
 mitsuntu@mitsuntu-FRONTIER:~$ 
+
+
+
+
+
+
+あなた:
+virt-install \
+--name cml \
+--ram 16000 \
+--vcpus 8 \
+--disk size=200 \
+--cdrom /path/to/refplat.iso \
+--os-type linux \
+--os-variant ubuntu20.04 \
+--network network=default \
+--graphics vnc
+
+
+echo "===== GPU ====="
+lspci | grep -i vga
+
+echo ""
+echo "===== GPU detail (if NVIDIA) ====="
+nvidia-smi 2>/dev/null || echo "NVIDIA driver not installed or not NVIDIA GPU"
+
+echo ""
+echo "===== TOTAL RAM ====="
+grep MemTotal /proc/meminfo
+
+echo ""
+echo "===== CPU threads ====="
+nproc
+
+
+echo "===== GPU ====="
+lspci | grep -i vga
+
+echo ""
+echo "===== GPU detail (if NVIDIA) ====="
+nvidia-smi 2>/dev/null || echo "NVIDIA driver not installed or not NVIDIA GPU"
+
+echo ""
+echo "===== TOTAL RAM ====="
+grep MemTotal /proc/meminfo
+
+echo ""
+echo "===== CPU threads ====="
+nproc
+
+
+
+nproc
+
+nproc
+
+mitsuntu@mitsuntu-FRONTIER:~$ lspci | grep -i vga
+01:00.0 VGA compatible controller: NVIDIA Corporation Device 2803 (rev a1)
+mitsuntu@mitsuntu-FRONTIER:~$ nvidia-smi 2>/dev/null || echo "NVIDIA driver not installed or not NVIDIA GPU"
+Fri Feb 20 20:27:50 2026       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.288.01             Driver Version: 535.288.01   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA GeForce RTX 4060 Ti     Off | 00000000:01:00.0  On |                  N/A |
+|  0%   40C    P8              10W / 160W |    312MiB /  8188MiB |      1%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A      2398      G   /usr/lib/xorg/Xorg                          114MiB |
+|    0   N/A  N/A      2539      G   /usr/bin/gnome-shell                         24MiB |
+|    0   N/A  N/A      2980      G   ...3/usr/bin/snapd-desktop-integration        6MiB |
+|    0   N/A  N/A   2253088      G   ...irefox/7836/usr/lib/firefox/firefox      154MiB |
++---------------------------------------------------------------------------------------+
+mitsuntu@mitsuntu-FRONTIER:~$ grep MemTotal /proc/meminfo
+MemTotal:       32565536 kB
+mitsuntu@mitsuntu-FRONTIER:~$ nproc
+24
+mitsuntu@mitsuntu-FRONTIER:~$ lspci | grep -i vga
+01:00.0 VGA compatible controller: NVIDIA Corporation Device 2803 (rev a1)
+mitsuntu@mitsuntu-FRONTIER:~$ nvidia-smi 2>/dev/null || echo "NVIDIA driver not installed or not NVIDIA GPU"
+Fri Feb 20 20:28:19 2026       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.288.01             Driver Version: 535.288.01   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA GeForce RTX 4060 Ti     Off | 00000000:01:00.0  On |                  N/A |
+|  0%   40C    P8              10W / 160W |    312MiB /  8188MiB |      3%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A      2398      G   /usr/lib/xorg/Xorg                          114MiB |
+|    0   N/A  N/A      2539      G   /usr/bin/gnome-shell                         24MiB |
+|    0   N/A  N/A      2980      G   ...3/usr/bin/snapd-desktop-integration        6MiB |
+|    0   N/A  N/A   2253088      G   ...irefox/7836/usr/lib/firefox/firefox      154MiB |
++---------------------------------------------------------------------------------------+
+mitsuntu@mitsuntu-FRONTIER:~$ rep MemTotal /proc/meminfo
+Command 'rep' not found, but can be installed with:
+sudo apt install rep
+mitsuntu@mitsuntu-FRONTIER:~$ grep MemTotal /proc/meminfo
+MemTotal:       32565536 kB
+mitsuntu@mitsuntu-FRONTIER:~$ nproc
+24
+mitsuntu@mitsuntu-FRONTIER:~$ ^C
+mitsuntu@mitsuntu-FRONTIER:~$ ^C
+mitsuntu@mitsuntu-FRONTIER:~$ 
+
+
+おれのスペックこれ
+KVMでCMLやりたい
+
+ファイルはISO、REFPLAT、REFPLAT-SUPPLEMENTALもってる
+
+ChatGPT:
+
+思考時間: 24s
+スペック確認した。CMLをKVMで回すにはかなり良い土台だよ（24スレッド、RAM 32GB、SSD 200GB割り当て可能）。GPUはCML自体には基本いらない（ブラウザ描画もサーバ側は関係なし）👍
+
+まず結論：その virt-install は “ほぼOK” だけど、CML向けに直した方が安定する
+CML 2.8以降は refplatの中身をCMLのローカルディスクへコピーして使うので、ディスクは余裕が正義。Ciscoのリリースノートにも「ローカルディスクにコピーする、十分なディスクを用意」とある 
+
+なので 200GBは最低ラインとしてはOK、将来ノード増やすなら 300GB以上あると心が平和。
+
+Mural（全体像）
+[Ubuntu Host (KVM)]
+        |
+        |  (VNC/HTTPS)
+        v
+   [CML VM (Ubuntuベース)]
+        |
+        | (CML内部のKVMでノード起動 = ネスト仮想化)
+        v
+ [IOSv / IOS-XE / NX-OS / Linux ...]
+1) ホスト側（Ubuntu）の必須チェック：ネスト仮想化
+CMLはVMの中でさらにKVMを使ってルータ等を起動するので、Nested virtualizationがキモ。
+
+Intel/AMDどっちか確認
+lscpu | egrep 'Vendor ID|Model name'
+有効化確認（Intel例）
+cat /sys/module/kvm_intel/parameters/nested 2>/dev/null
+Y ならOK
+
+N なら有効化する
+
+Intelで有効化（例）
+
+echo "options kvm_intel nested=1" | sudo tee /etc/modprobe.d/kvm-intel.conf
+sudo modprobe -r kvm_intel
+sudo modprobe kvm_intel nested=1
+AMDなら
+
+echo "options kvm_amd nested=1" | sudo tee /etc/modprobe.d/kvm-amd.conf
+sudo modprobe -r kvm_amd
+sudo modprobe kvm_amd nested=1
+ちなみにCisco側ドキュメントでは「CML VM側のnestedは基本ONだが、通常は追加の多重ネストが不要ならOFFでもよい」みたいな話もある 
+
+ただ まずはONで作るのが無難ばう。
+
+2) virt-install（おすすめ版）
+--os-variant ubuntu20.04 でも起動はするけど、CMLは専用アプライアンス寄りなので unknown にしとくと事故が減る（実例でも unknown が使われてる） 
+
+NAT（default network）でいいならこのまま
+sudo virt-install \
+  --name cml \
+  --memory 16000 \
+  --vcpus 8 \
+  --cpu host-passthrough \
+  --disk path=/var/lib/libvirt/images/cml.qcow2,size=200,bus=virtio,format=qcow2 \
+  --cdrom /path/to/cml-install.iso \
+  --os-variant unknown \
+  --network network=default,model=virtio \
+  --graphics vnc,listen=0.0.0.0 \
+  --video vga \
+  --boot uefi \
+  --noautoconsole
+ブリッジ（LAN直結）にしたいなら
+--network bridge=br0,model=virtio に変える。
+（br0未作成なら netplan か NetworkManager で作る）
+
+3) インストールの流れ（CMLあるあるポイント）
+**CML本体ISO（インストーラ）**でVM作ってインストール開始
+
+途中/再起動後に、refplat ISO をCDROMとして差し替え
+
+「ノードイメージがないよ」系で止まるやつ
+
+CML 2.8以降は、refplat内イメージをローカルディスクへコピーする前提 
+
+→ ここでディスクが渋いと泣く
+
+Qiitaでも「一度VM落としてrefplat ISOをアタッチ」って流れになってる 
+
+4) REFPLAT-SUPPLEMENTAL はどう入れる？
+やり方は2つ：
+
+CD/DVDとしてマウントして取り込む
+
+いったん scpでCMLに置いて、Cockpit（管理画面）から追加 
+
+CML 2.9だと supplemental ISO自体が更新されて中身増えたりする（例：追加VMイメージが入った） 
+
+なので「本体CMLのバージョン」と「refplat/supplementalの世代」を揃えるのが吉。
+
+5) あなたのスペックでの現実的な目安
+CML VM：vCPU 8 / RAM 16GB：OK
+
+ホストRAM 32GBなので、CML内で重いノード（IOS-XE系、SD-WAN、ISEとか）を多発させると詰まる
+
+とはいえCCNP/基礎ラボは全然いける
+
+ディスクは200GBで始めて、足りなくなったらqcow2拡張が現実的
+
+よくある罠（先に潰す）
+KVM nested無効 → ノード起動がコケる/遅い/不安定
+
+--cpu host-passthrough なし → 変なCPUフラグ不足で挙動が怪しくなることがある
+
+ストレージが遅い/少ない → refplatコピーやノード起動が地獄
+
+ブリッジなしで外部連携したい → NAT構成を理解してないと沼（最初はdefault NATでもOK）
+
+次の一手だけ聞くね（質問じゃなくて“最短分岐”）👇
+
+CML VMをLANに直で見せたい？（ブリッジ） それとも **自分PCだけで完結（NAT）**でOK？
+
+どっちでも、上のコマンドをそのまま寄せて完成形出すばう。
+
+
+
+
+
