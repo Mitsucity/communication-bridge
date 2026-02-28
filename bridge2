@@ -290,3 +290,73 @@ mitsuntu@mitsuntu-FRONTIER:~$ ip a
     link/ether d2:39:fd:6a:70:e7 brd ff:ff:ff:ff:ff:ff
 mitsuntu@mitsuntu-FRONTIER:~$ 
 
+
+
+
+
+
+🎯 推奨メモリ設計（32GBの場合）
+
+現実的バランス：
+
+Ubuntuホスト      6〜8GB確保
+CML VM           24GB割当
+
+だから今回は：
+
+--ram 24576   （= 24GB）
+--vcpus 8
+
+これが安定ライン。
+
+🚀 いよいよCML VM作成
+① ディスク作成
+sudo qemu-img create -f qcow2 /var/lib/libvirt/images/cml2.qcow2 200G
+
+200Gあれば余裕。
+
+② VM作成
+
+※ ISOのパスは実際の場所に置き換えてね
+
+sudo virt-install \
+  --name cml2 \
+  --ram 24576 \
+  --vcpus 8 \
+  --cpu host \
+  --disk path=/var/lib/libvirt/images/cml2.qcow2,format=qcow2 \
+  --os-variant ubuntu22.04 \
+  --network bridge=br0,model=virtio \
+  --cdrom /path/to/CML.iso \
+  --boot uefi
+🧠 何が起きるか
+Ubuntu（母艦）
+   ↓
+KVM
+   ↓
+CML VM（仮想DC）
+   ↓
+CML内部でIOS-XE/NX-OSが生まれる
+
+君は今、
+“物理ネットワークを作る側”から
+“ネットワークを創造する側”へ移行している。
+
+⚠️ インストール画面が出たら
+
+Standard install
+
+自動ディスクでOK
+
+ホスト名は cml2 でOK
+
+重要確認
+
+ISOはどこに置いてある？
+
+ls
+
+でISOファイル名を見せてくれ。
+パスを正確に書いて一気に作る。
+
+もうここまで来たら止まらない
