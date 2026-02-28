@@ -88,7 +88,59 @@ Fri Feb 20 20:28:19 2026
 | Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
 |                                         |                      |               MIG M. |
 |=========================================+======================+======================|
-|   0  NVIDIA GeForce RTX 4060 Ti     Off | 00000000:01:00.0  On |                  N/A |
+|   0  NVIDIA GeForce RTX 4060 Ti     Off | 00000000:01:00.0  On |                  N/A |mitsuntu@mitsuntu-FRONTIER:~$ echo "===== DISK SUMMARY ====="
+df -hT
+
+echo ""
+echo "===== BLOCK DEVICES ====="
+lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINT,MODEL
+
+echo ""
+echo "===== DISK FREE (root) ====="
+df -h /
+===== DISK SUMMARY =====
+Filesystem     Type      Size  Used Avail Use% Mounted on
+tmpfs          tmpfs     3.2G  2.5M  3.2G   1% /run
+/dev/nvme0n1p5 ext4      429G   75G  333G  19% /
+tmpfs          tmpfs      16G  4.0K   16G   1% /dev/shm
+tmpfs          tmpfs     5.0M  4.0K  5.0M   1% /run/lock
+efivarfs       efivarfs  192K  128K   60K  69% /sys/firmware/efi/efivars
+/dev/nvme0n1p1 vfat       96M   38M   59M  39% /boot/efi
+tmpfs          tmpfs     3.2G  2.4M  3.2G   1% /run/user/1000
+/dev/sda1      exfat      29G   18G   12G  62% /media/mitsuntu/BCDF-EF53
+/dev/nvme0n1p3 fuseblk   1.5T  1.1T  428G  71% /media/mitsuntu/Windows
+tmpfs          tmpfs      16G     0   16G   0% /run/qemu
+
+===== BLOCK DEVICES =====
+NAME        TYPE   SIZE FSTYPE  MOUNTPOINT                      MODEL
+loop0       loop     4K squashf /snap/bare/5                    
+loop1       loop    74M squashf /snap/core22/2292               
+loop2       loop  73.9M squashf /snap/core22/2216               
+loop3       loop 251.6M         /snap/firefox/7836              
+loop5       loop 505.1M squashf /snap/gnome-42-2204/176         
+loop6       loop 531.4M squashf /snap/gnome-42-2204/247         
+loop7       loop  91.7M squashf /snap/gtk-common-themes/1535    
+loop8       loop  12.9M squashf /snap/snap-store/1113           
+loop9       loop  12.2M squashf /snap/snap-store/1216           
+loop10      loop  38.8M squashf /snap/snapd/21759               
+loop11      loop  48.1M squashf /snap/snapd/25935               
+loop12      loop   576K squashf /snap/snapd-desktop-integration 
+loop13      loop   576K squashf /snap/snapd-desktop-integration 
+loop14      loop 251.7M         /snap/firefox/7766              
+sda         disk  28.9G                                         TransMemory
+└─sda1      part  28.9G exfat   /media/mitsuntu/BCDF-EF53       
+nvme0n1     disk   1.9T                                         INTEL SSDPEKNU02
+├─nvme0n1p1 part   100M vfat    /boot/efi                       
+├─nvme0n1p2 part    16M                                         
+├─nvme0n1p3 part   1.4T ntfs    /media/mitsuntu/Windows         
+├─nvme0n1p4 part  1000M ntfs                                    
+└─nvme0n1p5 part 436.9G ext4    /                               
+
+===== DISK FREE (root) =====
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n1p5  429G   75G  333G  19% /
+mitsuntu@mitsuntu-FRONTIER:~$ 
+
 |  0%   40C    P8              10W / 160W |    312MiB /  8188MiB |      3%      Default |
 |                                         |                      |                  N/A |
 +-----------------------------------------+----------------------+----------------------+
@@ -369,3 +421,55 @@ echo "===== DISK FREE (root) ====="
 df -h /
 
 
+mitsuntu@mitsuntu-FRONTIER:~$ echo "===== DISK SUMMARY ====="
+df -hT
+
+echo ""
+echo "===== BLOCK DEVICES ====="
+lsblk -o NAME,TYPE,SIZE,FSTYPE,MOUNTPOINT,MODEL
+
+echo ""
+echo "===== DISK FREE (root) ====="
+df -h /
+===== DISK SUMMARY =====
+Filesystem     Type      Size  Used Avail Use% Mounted on
+tmpfs          tmpfs     3.2G  2.5M  3.2G   1% /run
+/dev/nvme0n1p5 ext4      429G   75G  333G  19% /
+tmpfs          tmpfs      16G  4.0K   16G   1% /dev/shm
+tmpfs          tmpfs     5.0M  4.0K  5.0M   1% /run/lock
+efivarfs       efivarfs  192K  128K   60K  69% /sys/firmware/efi/efivars
+/dev/nvme0n1p1 vfat       96M   38M   59M  39% /boot/efi
+tmpfs          tmpfs     3.2G  2.4M  3.2G   1% /run/user/1000
+/dev/sda1      exfat      29G   18G   12G  62% /media/mitsuntu/BCDF-EF53
+/dev/nvme0n1p3 fuseblk   1.5T  1.1T  428G  71% /media/mitsuntu/Windows
+tmpfs          tmpfs      16G     0   16G   0% /run/qemu
+
+===== BLOCK DEVICES =====
+NAME        TYPE   SIZE FSTYPE  MOUNTPOINT                      MODEL
+loop0       loop     4K squashf /snap/bare/5                    
+loop1       loop    74M squashf /snap/core22/2292               
+loop2       loop  73.9M squashf /snap/core22/2216               
+loop3       loop 251.6M         /snap/firefox/7836              
+loop5       loop 505.1M squashf /snap/gnome-42-2204/176         
+loop6       loop 531.4M squashf /snap/gnome-42-2204/247         
+loop7       loop  91.7M squashf /snap/gtk-common-themes/1535    
+loop8       loop  12.9M squashf /snap/snap-store/1113           
+loop9       loop  12.2M squashf /snap/snap-store/1216           
+loop10      loop  38.8M squashf /snap/snapd/21759               
+loop11      loop  48.1M squashf /snap/snapd/25935               
+loop12      loop   576K squashf /snap/snapd-desktop-integration 
+loop13      loop   576K squashf /snap/snapd-desktop-integration 
+loop14      loop 251.7M         /snap/firefox/7766              
+sda         disk  28.9G                                         TransMemory
+└─sda1      part  28.9G exfat   /media/mitsuntu/BCDF-EF53       
+nvme0n1     disk   1.9T                                         INTEL SSDPEKNU02
+├─nvme0n1p1 part   100M vfat    /boot/efi                       
+├─nvme0n1p2 part    16M                                         
+├─nvme0n1p3 part   1.4T ntfs    /media/mitsuntu/Windows         
+├─nvme0n1p4 part  1000M ntfs                                    
+└─nvme0n1p5 part 436.9G ext4    /                               
+
+===== DISK FREE (root) =====
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n1p5  429G   75G  333G  19% /
+mitsuntu@mitsuntu-FRONTIER:~$ 
