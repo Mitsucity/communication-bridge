@@ -390,3 +390,33 @@ If it was, you can restart your domain by running:
 otherwise, please restart your installation.
 mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
 
+
+
+ISOを libvirt 標準領域へ移す。
+
+これがプロのやり方。
+
+① ISOを移動
+sudo mv /home/mitsuntu/Downloads/cml2_2.9.1-7_amd64-7.iso /var/lib/libvirt/images/
+② パーミッション整える（念のため）
+sudo chmod 644 /var/lib/libvirt/images/cml2_2.9.1-7_amd64-7.iso
+③ もう一度 virt-install
+
+今度はパスを変更：
+
+sudo virt-install \
+  --name cml2 \
+  --ram 24576 \
+  --vcpus 8 \
+  --cpu host \
+  --disk path=/var/lib/libvirt/images/cml2.qcow2,format=qcow2 \
+  --os-variant ubuntu22.04 \
+  --network bridge=br0,model=virtio \
+  --cdrom /var/lib/libvirt/images/cml2_2.9.1-7_amd64-7.iso \
+  --boot uefi
+🧠 なぜこれが正解？
+
+libvirtは
+
+/var/lib/libvirt/images
+
