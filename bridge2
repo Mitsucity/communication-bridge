@@ -91,3 +91,25 @@ skipping: no hosts matched
 PLAY RECAP *********************************************************************
 
 mitsuntu@mitsuntu-FRONTIER:~/Documents/ansible-lab$ 
+
+
+
+mitsuntu@mitsuntu-FRONTIER:~/Documents/ansible-lab$ more change.yml 
+- name: Simple local change
+  hosts: local
+  gather_facts: no
+
+  tasks:
+    - name: Creatge a test file
+      file:
+        path: home/mitsuntu/ansible-test.txt
+        state: touch
+
+    - name: Write content to file
+      copy:
+        content: "Ansible Changed this system"
+        dest: /home/mitsuntu/ansible-test.txt
+mitsuntu@mitsuntu-FRONTIER:~/Documents/ansible-lab$ more hosts
+[local]
+localhost ansbile_connection=local
+mitsuntu@mitsuntu-FRONTIER:~/Documents/ansible-lab$ 
