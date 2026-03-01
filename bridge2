@@ -1,3 +1,18 @@
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virt-copy-in \
+-d cml291 \
+/var/lib/libvirt/images/refplat-20250616-fcs.iso \
+/home/mitsucity-sysadmin/
+libguestfs: error: tar_in: tar subcommand failed on directory: /home/mitsucity-sysadmin/: tar: refplat-20250616-fcs.iso: Wrote only 8704 of 10240 bytes
+tar: Exiting with failure status due to previous errors
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+
+
+
+
+
+
+
+
 OK、そのエラーは 正しい警告で、いまのまま強行すると本当に壊れる可能性あるやつです。
 なので いったんVMを停止してから virt-copy-in が一番安全ルート。
 
