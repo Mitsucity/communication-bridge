@@ -1,3 +1,98 @@
+い、ここで核心に触れた 🧠🔥
+
+今の状態を冷静に読む。
+
+virl-images pool → active
+vol-list → ディレクトリしか見えていない
+
+つまり：
+
+libvirt pool は正しく動いている
+
+でも 個別のqcow2ボリュームは存在しない
+
+代わりにディレクトリ（virl-base-images）だけ
+
+これは正常。
+
+CML 2.x は
+
+/var/lib/libvirt/images/virl-base-images/
+
+の中にイメージ群を置く設計。
+
+🎯 重要な気づき
+
+今回の Permission denied は
+
+👉 storage pool の問題ではない
+👉 ほぼ確実に「パスの実行権限」問題
+
+Linuxでは
+
+読み取り(r) だけでは不十分
+ディレクトリには execute(x) が必要
+🔎 決定打チェック
+
+CML側でこれを出してくれ：
+
+namei -l /var/lib/libvirt/images/virl-base-images
+
+これで階層ごとの権限が全部見える。
+
+どこか1段でも x が欠けていたら
+qemu は入れない。
+
+🔥 高確率修正
+
+安全に一気に整える：
+
+sudo chmod -R o+rx /var/lib/libvirt/images
+sudo chmod o+rx /var
+sudo chmod o+rx /var/lib
+
+理由：
+
+qemu は libvirt-qemu ユーザーで動く。
+
+755 でも「親ディレクトリに x が無い」と詰む。
+
+🧠 ここがLinuxの罠
+
+例えば：
+
+/var        755
+/var/lib    750   ← ここで止まる
+/images     755
+
+こういう状態だと
+下がいくら正しくても入れない。
+
+🎯 いまやること
+
+namei -l の結果を貼る
+
+上の chmod を実行
+
+ノード再起動
+
+いまは構造の最後の層を剥がしている。
+
+ここ越えたら
+一気に静かになる。
+
+貼ってくれ、最後まで詰めよう。
+
+
+
+
+
+
+
+
+
+
+
 mitsucity@cml-controller:~$ sudo virsh vol-list virl-images
  Name               Path
 --------------------------------------------------------------
