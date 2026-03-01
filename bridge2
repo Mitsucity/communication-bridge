@@ -420,3 +420,17 @@ libvirtは
 
 /var/lib/libvirt/images
 
+
+
+① ホストからrefplatをscp
+
+Ubuntuホストから：
+
+scp -P 1122 refplat.iso sysadmin@192.168.100.142:/home/sysadmin
+
+※ IPは今画面に出てるCMLのIPに置き換える
+
+② CMLにSSHログイン
+ssh sysadmin@192.168.100.142 -p 1122
+③ インポート
+sudo cml image import refplat.iso
