@@ -100,7 +100,10 @@ mitsuntu@mitsuntu-FRONTIER:~/Documents/ansible-lab$ more change.yml
   gather_facts: no
 
   tasks:
-    - name: Creatge a test file
+    - name: Creatge a test filemitsuntu@mitsuntu-FRONTIER:~/Downloads$ scp -P 1122 refplat-20250616-fcs.iso sysadmin@192.168.100.142:/home/sysadmin
+ssh: connect to host 192.168.100.142 port 1122: Connection refused
+scp: Connection closed
+
       file:
         path: home/mitsuntu/ansible-test.txt
         state: touch
@@ -434,3 +437,9 @@ scp -P 1122 refplat.iso sysadmin@192.168.100.142:/home/sysadmin
 ssh sysadmin@192.168.100.142 -p 1122
 ③ インポート
 sudo cml image import refplat.iso
+
+
+
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ scp -P 1122 refplat-20250616-fcs.iso sysadmin@192.168.100.142:/home/sysadmin
+ssh: connect to host 192.168.100.142 port 1122: Connection refused
+scp: Connection closed
