@@ -1,3 +1,71 @@
+sudo virsh pool-list --all
+→ 何も出ない
+
+つまり
+
+👉 libvirt の storage pool が定義されていない
+
+でも
+
+/var/lib/libvirt/images
+  ├─ node-definitions
+  └─ virl-base-images
+
+は存在している。
+
+つまり：
+
+CMLの内部ディレクトリはある
+
+でも libvirt がそれを「プール」として認識していない
+
+🎯 結論
+
+ノード起動時の Permission denied は
+権限ではなく、storage pool 未登録による失敗の可能性が高い
+
+CMLは通常、自動で pool を作るが
+何らかの理由で未登録状態。
+
+🔥 今やること（手動で pool 作成）
+
+CML側でこれを順番に：
+
+① pool 定義
+sudo virsh pool-define-as \
+--name virl-images \
+--type dir \
+--target /var/lib/libvirt/images
+② pool 起動
+sudo virsh pool-start virl-images
+③ 自動起動設定
+sudo virsh pool-autostart virl-images
+④ 確認
+sudo virsh pool-list --all
+
+ここで
+
+virl-images   active   yes
+
+になれば成功。
+
+🧠 なぜこれで直る可能性が高い？
+
+CMLのノードは
+
+libvirt → storage pool → image path
+
+で参照する。
+
+poolが無いと
+imageの存在確認で失敗し
+Permission denied と見えるケースがある。
+
+🚀 そのあと
+
+もう一度ノード起動。
+
+
 mitsucity@cml-controller:~$ 
 mitsucity@cml-controller:~$ 
 mitsucity@cml-controller:~$ sudo virsh pool-list --all
