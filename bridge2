@@ -1,3 +1,24 @@
+mitsucity@cml-controller:~$ 
+mitsucity@cml-controller:~$ 
+mitsucity@cml-controller:~$ sudo virsh pool-list --all
+[sudo] password for mitsucity: 
+Sorry, try again.
+[sudo] password for mitsucity: 
+ Name   State   Autostart
+---------------------------
+
+mitsucity@cml-controller:~$ sudo virsh pool-info default
+error: failed to get pool 'default'
+error: Storage pool not found: no storage pool with matching name 'default'
+
+mitsucity@cml-controller:~$ sudo ls -l /var/lib/libvirt/images
+total 8
+drwxrwxr-x  2 libvirt-qemu virl2 4096 Mar  1 02:40 node-definitions
+drwxrwxr-x 30 libvirt-qemu virl2 4096 Mar  1 02:40 virl-base-images
+mitsucity@cml-controller:~$ 
+
+
+
 sudo virsh pool-list --all
 sudo virsh pool-info default
 sudo ls -l /var/lib/libvirt/imagesよ
