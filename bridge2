@@ -1,3 +1,57 @@
+OK、そのエラーは 正しい警告で、いまのまま強行すると本当に壊れる可能性あるやつです。
+なので いったんVMを停止してから virt-copy-in が一番安全ルート。
+
+ここからStep-by-stepでいくよ。
+
+Step 1: CML VM をシャットダウン（ホスト側）
+
+Ubuntuホストで：
+
+sudo virsh shutdown cml291
+sudo virsh domstate cml291
+
+domstate が shut off になるまで、数回叩いて確認。
+
+もし全然落ちない場合は（最終手段）：
+
+sudo virsh destroy cml291
+Step 2: 停止できたら virt-copy-in（ホスト側）
+sudo virt-copy-in \
+-d cml291 \
+/var/lib/libvirt/images/refplat-20250616-fcs.iso \
+/home/mitsucity-sysadmin/
+Step 3: VM 起動（ホスト側）
+sudo virsh start cml291
+
+コンソールを開くなら：
+
+sudo virt-viewer cml291
+Step 4: VM内でファイル確認（CML VM側）
+
+CML VM のコンソールで：
+
+ls -lh /home/mitsucity-sysadmin/refplat-20250616-fcs.iso
+
+見えたら転送成功 ✅
+
+Step 5: CMLの置き場へ移動（CML VM側）
+sudo mkdir -p /var/local/virl2/images
+sudo mv /home/mitsucity-sysadmin/refplat-20250616-fcs.iso /var/local/virl2/images/
+sudo ls -lh /var/local/virl2/images | grep refplat
+
+ここまでできたら、次は「取り込み（import）」に進む。
+まずは Step 1〜4 の結果（domstate と ls の出力）を貼って！
+
+
+
+
+
+
+
+
+
+
+
 mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virt-copy-in \
 -d cml291 \
 /var/lib/libvirt/images/refplat-20250616-fcs.iso \
