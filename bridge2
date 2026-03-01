@@ -1,4 +1,20 @@
-mitsuntu@mitsuntu-FRONTIER:~/Downloads$ ip -br link show
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virsh undefine cml2 --remove-all-storage
+error: Storage volume 'vda'(/var/lib/libvirt/images/cml2.qcow2) is not managed by libvirt. Remove it manually.
+
+error: Failed to undefine domain 'cml2'
+error: Requested operation is not valid: cannot undefine domain with nvram
+
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+
+
+
+
+
+
+
+m
+
+itsuntu@mitsuntu-FRONTIER:~/Downloads$ ip -br link show
 lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
 enp4s0           UP             a8:a1:59:f8:1d:00 <BROADCAST,MULTICAST,UP,LOWER_UP> 
 virbr0           DOWN           52:54:00:15:54:f5 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
