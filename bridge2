@@ -1,3 +1,16 @@
+sudo chown libvirt-qemu:kvm /var/lib/libvirt/images/refplat-20250616-fcs.iso
+sudo chown libvirt-qemu:kvm /var/lib/libvirt/images/refplat-20250616-supplemental.iso
+
+# 実行権限を外して 0644 にする
+sudo chmod 0644 /var/lib/libvirt/images/refplat-20250616-fcs.iso
+sudo chmod 0644 /var/lib/libvirt/images/refplat-20250616-supplemental.iso
+
+# 確認
+sudo ls -lh /var/lib/libvirt/images | grep refplat
+
+
+
+
 mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
 sudo ls -lh /var/lib/libvirt/images | grep refplat
 -rwxr-xr-x 1 mitsuntu     mitsuntu  14G Feb 18 00:57 refplat-20250616-fcs.iso
