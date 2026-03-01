@@ -1,3 +1,83 @@
+よし、エラー読めた。
+
+Permission denied: /var/local/virl2/images/...
+
+これは100％これ 👇
+images ディレクトリの所有権を変えた影響。
+
+CML内部では
+ノード生成時に virl2 / libvirt 系プロセスが images を読む。
+そのユーザーが読めなくなってる。
+
+つまり今は
+
+mitsucity 所有になっていて
+virl / libvirt ユーザーが読めない
+
+という状態。
+
+🔥 一発で直すコマンド
+
+CMLのTerminal（GUIのやつでOK）で：
+
+sudo chown -R root:root /var/local/virl2/images
+sudo chmod -R 755 /var/local/virl2/images
+
+そして念のため：
+
+sudo systemctl restart virl2
+
+（エラー出ても無視でOK）
+
+🎯 なぜこうなるのか（仕組み）
+
+CMLは：
+
+root
+
+virl
+
+libvirt
+
+qemu
+
+みたいな複数の内部ユーザーで動く。
+
+/var/local/virl2/images は
+root管理前提のシステムディレクトリ
+
+そこをユーザー所有にすると
+内部のQEMUが読めなくなる。
+
+🧠 今回の学び（かなり重要）
+
+Linuxでは
+
+ユーザーが使う場所 → /home
+
+システムが使う場所 → /var, /usr, /etc
+
+は 世界が違う。
+
+Windowsの感覚で触ると事故る。
+
+今ちょうどLinuxレベル1を突破したところだな 😎
+
+🔁 直したあと
+
+もう一度ノード起動してみて。
+
+たぶん即動く。
+
+もしまだエラー出たら
+
+ls -ld /var/local/virl2/images
+
+の結果を貼って。
+
+次は確実に刺す。
+
+
 1) FCS を dropfolder に置いて名前を合わせる
 
 公式手順だと、refplat_images.iso という名前が期待される。
