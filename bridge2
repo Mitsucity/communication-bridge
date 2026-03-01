@@ -1,3 +1,37 @@
+✅ 直す手順（コピペでOK）
+1) まず現状確認（見たいだけ）
+sudo ls -ld /var/local/virl2/secrets /var/local/virl2/secrets/admin_hosts
+sudo ls -l  /var/local/virl2/secrets/admin_hosts | head
+2) secrets を「virl2 が書ける金庫」に戻す（これが本丸）
+sudo chown -R virl2:virl2 /var/local/virl2/secrets
+sudo chmod 700 /var/local/virl2/secrets
+sudo chmod 700 /var/local/virl2/secrets/admin_hosts
+3) known_hosts を作り直して権限固定
+
+（すでにある場合も上書きされない、権限だけ整う）
+
+sudo -u virl2 bash -lc 'mkdir -p /var/local/virl2/secrets/admin_hosts && touch /var/local/virl2/secrets/admin_hosts/known_hosts'
+sudo chown virl2:virl2 /var/local/virl2/secrets/admin_hosts/known_hosts
+sudo chmod 600 /var/local/virl2/secrets/admin_hosts/known_hosts
+4) systemd の「連続失敗ロック」を解除して再起動
+
+ログに Start request repeated too quickly が出てるから解除が必要。
+
+sudo systemctl reset-failed virl2-compute-setup.service
+sudo systemctl restart virl2-compute-setup.service
+sudo systemctl status virl2-compute-setup.service --no-pager
+
+
+
+
+
+
+
+
+
+
+
+
 mitsucity@cml-controller:~$ sudo systemctl cat virl2-compute-setup.service
 [sudo] password for mitsucity: 
 # /usr/lib/systemd/system/virl2-compute-setup.service
