@@ -1,4 +1,76 @@
-mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virt-copy-in \
+思考時間: 45s
+
+そのエラー内容からすると、virt-copy-in で 14GB をゲストの /home に突っ込む方式は相性悪い（途中で書き込み失敗）です。
+ここは“正攻法”に切り替えよう。CML 2.9 系はそもそも **refplat は「ISOを仮想DVDとしてマウント」→「Cockpitのボタンでローカルディスクへコピー」**が公式ルートになってます。
+
+次のSTEP：refplat を「仮想DVD」としてCML VMに挿す
+Step 4-1（ホスト側）：refplat(fcs) をCDROMとしてアタッチ
+
+まず、CML VMが起動中でもいけることが多いけど、確実にしたいので 一旦シャットダウンしてからやろう。
+
+sudo virsh shutdown cml291
+sudo virsh domstate cml291
+
+shut off になったら次。
+
+CDROMとして追加（ターゲット名は sdb でOK）：
+
+sudo virsh attach-disk cml291 \
+/var/lib/libvirt/images/refplat-20250616-fcs.iso \
+sdb --type cdrom --mode readonly --config
+
+起動：
+
+sudo virsh start cml291
+Step 4-2（ブラウザ）：Cockpit（9090）を開く
+
+CML VM 画面に出てたこれ：
+
+Web console: https://192.168.100.183:9090/
+
+ここにアクセスして、OS側ユーザーでログイン（あなたが作った mitsucity-sysadmin のやつ）。
+
+そして System Administration Cockpit 内にある
+
+Copy Refplat ISO to Disk
+
+ボタンを押してコピー実行。
+このボタンが「ISOからローカルディスクへ展開する」公式機能。
+
+supplemental が “Too Large” な件について
+
+それ、あなたの直感どおりで ブラウザアップロード前提じゃないから起きる。
+29GBの supplemental は “ISOをDVDに挿してコピー” が前提の運用。
+
+やり方は fcs と同じで、次に：
+
+refplat-20250616-supplemental.iso を同じ要領で CDROM に付け替え
+
+Cockpit の Copy Refplat ISO to Disk をもう一回
+
+でOK。
+
+まず確認したいこと（すぐ終わる）
+
+ホスト側で、CDROMアタッチが入ったか確認：
+
+sudo virsh domblklist cml291
+
+ここに refplat-20250616-fcs.iso が見えたら次は Cockpit へGO。
+
+domblklist の出力を貼ってくれたら、次のクリック場所（Cockpit内のどこを押すか）まで迷路にならないように案内する。
+
+
+
+
+
+
+
+
+m
+
+
+itsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virt-copy-in \
 -d cml291 \
 /var/lib/libvirt/images/refplat-20250616-fcs.iso \
 /home/mitsucity-sysadmin/
