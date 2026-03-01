@@ -1,3 +1,10 @@
+
+mitsuntu@mitsuntu-FRONTIER:~$ sudo virsh console cml291
+[sudo] password for mitsuntu: 
+Connected to domain 'cml291'
+Escape character is ^] (Ctrl + ])
+
+
 ✅ やること：UEFI有効でVMを作り直す
 
 一回VMを消して、UEFI指定付きで再作成する。
