@@ -1,3 +1,24 @@
+# CML VM 名を確認（例: cml2 など）
+virsh list --all
+
+# 停止（動いていれば）
+sudo virsh destroy <VM名>
+
+# 定義削除
+sudo virsh undefine <VM名>
+
+# ディスク削除（パスを確認してから）
+sudo rm -f /var/lib/libvirt/images/<VM名>.qcow2
+
+
+
+
+
+
+
+
+
+
 mitsucity@cml-controller:~$ sudo systemctl status virl2-compute-setup.service --no-pager
 ● virl2-compute-setup.service - CML2 Compute Host Registration
      Loaded: loaded (/usr/lib/systemd/system/virl2-compute-setup.service; enabled; preset: enabled)
