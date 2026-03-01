@@ -1,3 +1,77 @@
+よし、ここからは“外科手術モード”だ 🧠⚙️
+状況が変わらない＝images だけじゃない可能性が高い。
+
+エラーはこれだったよね：
+
+Permission denied: /var/local/virl2/images/xxxxxxxx
+
+つまり
+CML内部の qemu / libvirt ユーザーが読めていない。
+
+🔎 まず真実を見よう（これを貼って）
+
+CML側ターミナルで：
+
+ls -ld /var/local/virl2
+ls -ld /var/local/virl2/images
+ls -ld /var/local/virl2/images/*
+
+ここで重要なのは：
+
+所有者
+
+パーミッション
+
+execute (x) がディレクトリについているか
+
+🎯 高確率で必要な修正
+
+今回は images だけでなく
+virl2 全体の ownership が壊れている可能性が高い。
+
+なので安全に戻す：
+
+sudo chown -R root:root /var/local/virl2
+sudo find /var/local/virl2 -type d -exec chmod 755 {} \;
+sudo find /var/local/virl2 -type f -exec chmod 644 {} \;
+
+※ これで「読めない」系は完全に消える
+
+🧠 なぜ images だけ直してもダメ？
+
+Linuxは階層ごとに権限チェックする。
+
+例：
+
+/var
+/var/local
+/var/local/virl2
+/var/local/virl2/images
+
+どこか1段でも「x」がないと入れない。
+
+だから親ディレクトリも重要。
+
+🔁 その後
+sudo systemctl restart libvirtd
+sudo systemctl restart docker
+
+そしてもう一度ノード起動。
+
+まだダメなら
+
+そのときは
+実際にどのユーザーで起動してるかを特定するフェーズに入る。
+
+でも今はまだ“権限の整形”が最優先。
+
+貼ってくれたら、
+どこが詰まってるか一撃で特定する。
+
+今ちょうどLinuxが本気で牙を見せてるところだな
+
+
+
 いいぞ、今は“静かな分岐点”に立っている 🌒
 
 まず落ち着こう。
