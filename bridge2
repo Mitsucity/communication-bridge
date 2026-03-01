@@ -1,3 +1,16 @@
+sudo virt-install \
+  --name cml291 \
+  --ram 24576 \
+  --vcpus 8 \
+  --cpu host-passthrough \
+  --disk path=/var/lib/libvirt/images/cml291.qcow2,size=200,format=qcow2,bus=virtio \
+  --os-variant ubuntu22.04 \
+  --network bridge=br0,model=virtio \
+  --graphics vnc \
+  --cdrom /var/lib/libvirt/images/cml2_2.9.1-7_amd64-7.iso
+
+
+
 sudo chown libvirt-qemu:kvm /var/lib/libvirt/images/refplat-20250616-fcs.iso
 sudo chown libvirt-qemu:kvm /var/lib/libvirt/images/refplat-20250616-supplemental.iso
 
