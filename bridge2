@@ -1,3 +1,18 @@
+mitsucity@cml-controller:~$ sudo virsh vol-list virl-images
+ Name               Path
+--------------------------------------------------------------
+ .cml               /var/lib/libvirt/images/.cml
+ node-definitions   /var/lib/libvirt/images/node-definitions
+ virl-base-images   /var/lib/libvirt/images/virl-base-images
+
+mitsucity@cml-controller:~$ 
+sudo ls -l /var/lib/libvirt/images
+total 8
+drwxrwxr-x  2 libvirt-qemu virl2 4096 Mar  1 02:40 node-definitions
+drwxrwxr-x 30 libvirt-qemu virl2 4096 Mar  1 02:40 virl-base-images
+mitsucity@cml-controller:~$ 
+
+
 いいね…ここまで来たら、ほぼ芯に当たってる 🎯
 
 今の状態：
