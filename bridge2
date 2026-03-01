@@ -1,3 +1,175 @@
+mitsucity@cml-controller:~$ sudo systemctl cat virl2-compute-setup.service
+[sudo] password for mitsucity: 
+# /usr/lib/systemd/system/virl2-compute-setup.service
+#
+# This file is part of VIRL 2
+# Copyright (c) 2019-2025, Cisco Systems, Inc.
+# All rights reserved.
+#
+
+[Unit]
+Description=CML2 Compute Host Registration
+After=virl2-configure.service
+After=virl2-controller.service
+# cannot block LLD, as controller waits for connect if already registered
+#Before=virl2-lowlevel-driver.service
+PartOf=virl2.target
+
+[Service]
+Type=simple
+RestartSec=5
+Restart=on-failure
+RestartPreventExitStatus=13 47
+RemainAfterExit=yes
+Environment="HOME=/var/local/virl2"
+WorkingDirectory=/var/local/virl2
+ExecStart=/usr/local/bin/virl2-compute-setup.sh
+User=virl2
+FinalKillSignal=SIGQUIT
+LimitCORE=infinity
+
+[Install]
+WantedBy=virl2.target
+mitsucity@cml-controller:~$ udo journalctl -u virl2-compute-setup.service -n 200 --no-pager
+bash: udo: command not found
+mitsucity@cml-controller:~$ sudo journalctl -u virl2-compute-setup.service -n 200 --no-pager
+Feb 28 17:04:22 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Feb 28 17:04:22 cml-controller virl2-compute-setup.sh[4852]: controller address: ::1
+Feb 28 17:04:22 cml-controller virl2-compute-setup.sh[4852]: INFO: virl2-compute-setup:128:data: {"id": "fee7c5d1-3790-43dd-9d3c-91063dc325f2", "server_address": "::1", "hostname": "cml-controller", "is_connector": true, "is_simulator": true, "sshd_host_keys": ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEUee9rwwx9TcSLljdjhCYbrfMqYKPn8j/N9qPirRXX+", "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC33TY/RdaMf/mQKtC+LtlnwS0HVXwQeIoWXtNKJpCl51AUVschhH0/5eI1BsTqmN3Nr1IlfqcUk3LD+mZpWa/Zbj/akPVBlN+RTTU97EbG1r/pRH0giNdlANIFpMgsv0VmCKc4rvKGEbNHwEd0yYaePYDLrriXlHFoMgILjwrTpbyMPkcAiFwFc6zBLrjXx+KSt+nVtQxo4YHqevom5b8J3RPXDYdQJkp/U41hXrt6LuVRdMGWJKJCr4REdGy7ZO3RQp3HnCaZBzSVw64eUcuKBlQWts0uOd85kO2fZscvwt1R0rFH2EHzuVlIf8uP12uLKEROH8FrQoXCq2zk1AZtN8SwZPkr24DSB5kAZ2UTax1OX30UV44TV0hFiQopJBrZ2aQETMeI93FOaHp9PJunGHif22mKA1bEPHR50crtUEtXnR9ohqgILZg6kJ8p6C1BrEoQAW27Y78zMWG8cKMVeJllu9KWNqCYOvDR7PGS6bWUjcVTHJ5X9uQzdNg0nh0=", "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAtnaWlpHR4QO4FMbk2upX8LGh4lplGxuzSGQh9PXxY9HIW20cIg5hCaZ06m0VbdcA2TTQI6ymEZ4BPQkd65XV8="]}
+Feb 28 17:04:22 cml-controller virl2-compute-setup.sh[4852]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Feb 28 17:04:22 cml-controller virl2-compute-setup.sh[4852]: INFO: _client:1025:HTTP Request: POST https://[::1]/api/internal/computes "HTTP/1.1 502 Bad Gateway"
+Feb 28 17:04:22 cml-controller virl2-compute-setup.sh[4852]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description": "Bad gateway!", "code": 502}
+Feb 28 17:04:22 cml-controller virl2-compute-setup.sh[4852]: INFO: virl2-compute-setup:143:compute host registration attempts left: 23
+Feb 28 17:04:27 cml-controller virl2-compute-setup.sh[4852]: INFO: _client:1025:HTTP Request: POST https://[::1]/api/internal/computes "HTTP/1.1 503 Service Unavailable"
+Feb 28 17:04:27 cml-controller virl2-compute-setup.sh[4852]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description":"Core driver is not ready for operation.","code":503}
+Feb 28 17:04:27 cml-controller virl2-compute-setup.sh[4852]: INFO: virl2-compute-setup:143:compute host registration attempts left: 22
+Feb 28 17:04:32 cml-controller virl2-compute-setup.sh[4852]: INFO: _client:1025:HTTP Request: POST https://[::1]/api/internal/computes "HTTP/1.1 200 OK"
+Feb 28 17:04:32 cml-controller virl2-compute-setup.sh[4852]: INFO: virl2-compute-setup:55:registration completed
+Feb 28 17:11:34 cml-controller systemd[1]: virl2-compute-setup.service: Deactivated successfully.
+Feb 28 17:11:34 cml-controller systemd[1]: Stopped virl2-compute-setup.service - CML2 Compute Host Registration.
+Feb 28 17:11:44 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Feb 28 17:11:44 cml-controller virl2-compute-setup.sh[8804]: controller address: ::1
+Feb 28 17:11:44 cml-controller virl2-compute-setup.sh[8804]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Feb 28 17:11:44 cml-controller virl2-compute-setup.sh[8804]: ERROR: virl2-compute-setup:43:unable to make registration request: [Errno 111] Connection refused
+Feb 28 17:11:49 cml-controller virl2-compute-setup.sh[8804]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description":"Core driver is not ready for operation.","code":503}
+Mar 01 02:40:10 cml-controller systemd[1]: virl2-compute-setup.service: Deactivated successfully.
+Mar 01 02:40:10 cml-controller systemd[1]: Stopped virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 02:40:36 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 02:40:36 cml-controller virl2-compute-setup.sh[162629]: controller address: ::1
+Mar 01 02:40:36 cml-controller virl2-compute-setup.sh[162629]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 02:40:36 cml-controller virl2-compute-setup.sh[162629]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description": "Bad gateway!", "code": 502}
+Mar 01 02:40:41 cml-controller virl2-compute-setup.sh[162629]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description":"Core driver is not ready for operation.","code":503}
+Mar 01 03:26:04 cml-controller systemd[1]: virl2-compute-setup.service: Deactivated successfully.
+Mar 01 03:26:04 cml-controller systemd[1]: Stopped virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 03:26:04 cml-controller systemd[1]: Stopping virl2-compute-setup.service - CML2 Compute Host Registration...
+Mar 01 03:26:14 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 03:26:14 cml-controller virl2-compute-setup.sh[180667]: controller address: ::1
+Mar 01 03:26:14 cml-controller virl2-compute-setup.sh[180667]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 03:26:14 cml-controller virl2-compute-setup.sh[180667]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description": "Bad gateway!", "code": 502}
+Mar 01 03:26:19 cml-controller virl2-compute-setup.sh[180667]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description":"Core driver is not ready for operation.","code":503}
+Mar 01 03:31:24 cml-controller systemd[1]: virl2-compute-setup.service: Deactivated successfully.
+Mar 01 03:31:24 cml-controller systemd[1]: Stopped virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 03:31:24 cml-controller systemd[1]: Stopping virl2-compute-setup.service - CML2 Compute Host Registration...
+Mar 01 03:31:36 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 03:31:36 cml-controller virl2-compute-setup.sh[201104]: controller address: ::1
+Mar 01 03:31:36 cml-controller virl2-compute-setup.sh[201104]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 03:31:36 cml-controller virl2-compute-setup.sh[201104]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description": "Bad gateway!", "code": 502}
+Mar 01 03:31:41 cml-controller virl2-compute-setup.sh[201104]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description":"Core driver is not ready for operation.","code":503}
+Mar 01 03:31:46 cml-controller virl2-compute-setup.sh[201104]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 03:31:46 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 03:31:46 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 11:49:46 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 11:49:46 cml-controller virl2-compute-setup.sh[307983]: controller address: ::1
+Mar 01 11:49:46 cml-controller virl2-compute-setup.sh[307983]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 11:49:46 cml-controller virl2-compute-setup.sh[307983]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description": "Bad gateway!", "code": 502}
+Mar 01 11:49:51 cml-controller virl2-compute-setup.sh[307983]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description":"Core driver is not ready for operation.","code":503}
+Mar 01 11:49:56 cml-controller virl2-compute-setup.sh[307983]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 11:49:56 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 11:49:56 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:01:53 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:01:53 cml-controller virl2-compute-setup.sh[315875]: controller address: ::1
+Mar 01 12:01:54 cml-controller virl2-compute-setup.sh[315875]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 12:01:54 cml-controller virl2-compute-setup.sh[315875]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description": "Bad gateway!", "code": 502}
+Mar 01 12:01:59 cml-controller virl2-compute-setup.sh[315875]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description":"Core driver is not ready for operation.","code":503}
+Mar 01 12:02:04 cml-controller virl2-compute-setup.sh[315875]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 12:02:04 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 12:02:04 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:48:01 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:48:01 cml-controller virl2-compute-setup.sh[329981]: controller address: ::1
+Mar 01 12:48:01 cml-controller virl2-compute-setup.sh[329981]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 12:48:01 cml-controller virl2-compute-setup.sh[329981]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description": "Bad gateway!", "code": 502}
+Mar 01 12:48:06 cml-controller virl2-compute-setup.sh[329981]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description":"Core driver is not ready for operation.","code":503}
+Mar 01 12:48:11 cml-controller virl2-compute-setup.sh[329981]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 12:48:11 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 12:48:11 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:13 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:13 cml-controller virl2-compute-setup.sh[332419]: controller address: ::1
+Mar 01 12:51:14 cml-controller virl2-compute-setup.sh[332419]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 12:51:14 cml-controller virl2-compute-setup.sh[332419]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 12:51:14 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 12:51:14 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:16 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:16 cml-controller virl2-compute-setup.sh[332425]: controller address: ::1
+Mar 01 12:51:16 cml-controller virl2-compute-setup.sh[332425]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 12:51:16 cml-controller virl2-compute-setup.sh[332425]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 12:51:16 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 12:51:16 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:17 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:17 cml-controller virl2-compute-setup.sh[332431]: controller address: ::1
+Mar 01 12:51:17 cml-controller virl2-compute-setup.sh[332431]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 12:51:17 cml-controller virl2-compute-setup.sh[332431]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 12:51:17 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 12:51:17 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:18 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:18 cml-controller virl2-compute-setup.sh[332455]: controller address: ::1
+Mar 01 12:51:18 cml-controller virl2-compute-setup.sh[332455]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 12:51:18 cml-controller virl2-compute-setup.sh[332455]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 12:51:18 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 12:51:18 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:19 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:19 cml-controller virl2-compute-setup.sh[332461]: controller address: ::1
+Mar 01 12:51:19 cml-controller virl2-compute-setup.sh[332461]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 12:51:19 cml-controller virl2-compute-setup.sh[332461]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 12:51:19 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 12:51:19 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:20 cml-controller systemd[1]: virl2-compute-setup.service: Start request repeated too quickly.
+Mar 01 12:51:20 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:20 cml-controller systemd[1]: Failed to start virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:20 cml-controller systemd[1]: virl2-compute-setup.service: Start request repeated too quickly.
+Mar 01 12:51:20 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:20 cml-controller systemd[1]: Failed to start virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:21 cml-controller systemd[1]: virl2-compute-setup.service: Start request repeated too quickly.
+Mar 01 12:51:21 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:21 cml-controller systemd[1]: Failed to start virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:23 cml-controller systemd[1]: virl2-compute-setup.service: Start request repeated too quickly.
+Mar 01 12:51:23 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:23 cml-controller systemd[1]: Failed to start virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:56 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:56 cml-controller virl2-compute-setup.sh[332542]: controller address: ::1
+Mar 01 12:51:56 cml-controller virl2-compute-setup.sh[332542]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 12:51:56 cml-controller virl2-compute-setup.sh[332542]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 12:51:56 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 12:51:56 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:58 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:58 cml-controller virl2-compute-setup.sh[332548]: controller address: ::1
+Mar 01 12:51:58 cml-controller virl2-compute-setup.sh[332548]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 12:51:58 cml-controller virl2-compute-setup.sh[332548]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 12:51:58 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 12:51:58 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+Mar 01 12:51:59 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 12:51:59 cml-controller virl2-compute-setup.sh[332574]: controller address: ::1
+Mar 01 12:51:59 cml-controller virl2-compute-setup.sh[332574]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 12:51:59 cml-controller virl2-compute-setup.sh[332574]: ERROR: virl2-compute-setup:140:Controller failed to write a file: {"description":"Permission denied for /var/local/virl2/secrets/admin_hosts/known_hosts.","code":409}
+Mar 01 12:51:59 cml-controller systemd[1]: virl2-compute-setup.service: Main process exited, code=exited, status=13/n/a
+Mar 01 12:51:59 cml-controller systemd[1]: virl2-compute-setup.service: Failed with result 'exit-code'.
+mitsucity@cml-controller:~$ 
+
+
+
+
+
+
+
 まずこれだけ貼って
 
 sudo systemctl cat virl2-compute-setup.service
