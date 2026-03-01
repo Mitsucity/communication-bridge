@@ -1,3 +1,25 @@
+mitsucity@cml-controller:~$ sudo virsh pool-define-as \
+--name virl-images \
+--type dir \
+--target /var/lib/libvirt/images
+error: Failed to define pool virl-images
+error: operation failed: pool 'virl-images' already exists with uuid 30e8c72d-e359-4047-86fa-fbefc7d7193a
+
+mitsucity@cml-controller:~$ sudo virsh pool-start virl-images
+Pool virl-images started
+
+mitsucity@cml-controller:~$ sudo virsh pool-autostart virl-images
+Pool virl-images marked as autostarted
+
+mitsucity@cml-controller:~$ sudo virsh pool-list --all
+ Name          State    Autostart
+-----------------------------------
+ virl-images   active   yes
+
+mitsucity@cml-controller:~$ 
+
+
+
 sudo virsh pool-list --all
 → 何も出ない
 
