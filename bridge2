@@ -1,3 +1,33 @@
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virsh domblklist cml291
+ Target   Source
+------------------------------------------------------------
+ vda      /var/lib/libvirt/images/cml291.qcow2
+ sda      -
+ sdb      /var/lib/libvirt/images/refplat-20250616-fcs.iso
+
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+
+
+
+mitsucity-sysadmin@cml-controller:~$ lsblk
+NAME             MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sr0               11:0    1  13.8G  0 rom  
+sr1               11:1    1  1024M  0 rom  
+vda              253:0    0   200G  0 disk 
+├─vda1           253:1    0   512M  0 part /boot/efi
+└─vda2           253:2    0 199.5G  0 part 
+  ├─vg00-lv_root 252:0    0    10G  0 lvm  /
+  └─vg00-lv_var  252:1    0 189.5G  0 lvm  /var
+mitsucity-sysadmin@cml-controller:~$ 
+
+
+
+
+
+
+
+
+
 mitsucity-sysadmin@cml-controller:~$ ls -lh /var/local/virl2/images
 total 12K
 drwxr-xr-x 4 virl2 virl2 4.0K Mar  1 16:33 1d17049e-1da9-4d26-b77d-d937dc14cc3b
