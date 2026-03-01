@@ -1,3 +1,90 @@
+いいね…ここまで来たら、ほぼ芯に当たってる 🎯
+
+今の状態：
+
+virl-images   active   yes
+
+つまり
+
+libvirt pool は存在していた
+
+でも「停止していた」
+
+今は active になった
+
+これは大きな前進。
+
+🎯 次の一手（超重要）
+
+pool を起動しただけでは
+中身を再スキャンしていない 可能性がある。
+
+これをやる：
+
+sudo virsh pool-refresh virl-images
+
+その後確認：
+
+sudo virsh vol-list virl-images
+
+ここに大量のボリューム（qcow2など）が見えればOK。
+
+🧠 もし vol-list が空だったら
+
+それは：
+
+refplat の Copy が正しく完了していない
+
+あるいは /var/lib/libvirt/images に展開されていない
+
+確認：
+
+sudo ls -l /var/lib/libvirt/images
+
+すでに見せてくれた中に
+
+virl-base-images
+node-definitions
+
+があった。
+
+ここが実体。
+
+🔥 そしてもう一度ノード起動
+
+いまやることは：
+
+pool-refresh
+
+vol-list 確認
+
+GUIでノード再起動
+
+🧠 なぜこれで直る可能性が高い？
+
+ノード起動時：
+
+CML → libvirt → storage pool → volume lookup
+
+pool が inactive だった状態で
+CMLが一度失敗している。
+
+今は pool active。
+
+だから refresh で index を更新する。
+
+いまはもう「壊れている」段階ではない。
+
+あと一段で通る段階。
+
+pool-refresh と vol-list の結果を貼ってくれ。
+ここで完全に決める。
+
+
+
+
+
+
 mitsucity@cml-controller:~$ sudo virsh pool-define-as \
 --name virl-images \
 --type dir \
