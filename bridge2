@@ -1,3 +1,17 @@
+mitsucity@cml-controller:~$ df -h
+Filesystem                Size  Used Avail Use% Mounted on
+tmpfs                     2.4G  1.4M  2.4G   1% /run
+efivarfs                  256K   54K  197K  22% /sys/firmware/efi/efivars
+/dev/mapper/vg00-lv_root  9.8G  9.3G     0 100% /
+tmpfs                      12G  164K   12G   1% /dev/shm
+tmpfs                     5.0M     0  5.0M   0% /run/lock
+tmpfs                      12G     0   12G   0% /run/qemu
+/dev/mapper/vg00-lv_var   187G  780M  179G   1% /var
+/dev/vda1                 511M  6.2M  505M   2% /boot/efi
+tmpfs                     2.4G   16K  2.4G   1% /run/user/1000
+mitsucity@cml-controller:~$ 
+
+
 mitsuntu@mitsuntu-FRONTIER:~/Downloads$ scp -P 1122 refplat-20250616-fcs.iso mitsucity@192.168.100.142:/home/mitsucity
 mitsucity@192.168.100.142's password: 
 refplat-20250616-fcs.iso                       48% 6912MB 273.1MB/s   00:26 ETA
