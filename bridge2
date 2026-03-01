@@ -1,3 +1,22 @@
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virt-copy-in \
+-d cml291 \
+/var/lib/libvirt/images/refplat-20250616-fcs.iso \
+/home/mitsucity-sysadmin/
+[sudo] password for mitsuntu: 
+libguestfs: error: error: domain is a live virtual machine.
+Writing to the disks of a running virtual machine can cause disk corruption.
+Use read-only access.  In most libguestfs tools use --ro.
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+
+
+
+
+
+
+
+
+
+
 sudo virt-copy-in \
 -d cml291 \
 /var/lib/libvirt/images/refplat-20250616-fcs.iso \
