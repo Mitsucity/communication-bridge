@@ -1,3 +1,24 @@
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virsh destroy cml2 2>/dev/null
+
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virsh shutdown cml2 2>/dev/null
+
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virsh dumpxml cml2 | grep -i nvram -n
+19:    <nvram template='/usr/share/OVMF/OVMF_VARS_4M.ms.fd'>/var/lib/libvirt/qemu/nvram/cml2_VARS.fd</nvram>
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virsh undefine cml2 --nvram
+Domain 'cml2' has been undefined
+
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo rm -f /var/lib/libvirt/images/cml2.qcow2
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virsh list --all
+ Id   Name   State
+--------------------
+
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo ls -lh /var/lib/libvirt/images | egrep 'cml2|cml291' || true
+-rw-r--r-- 1 libvirt-qemu kvm 3.9G Feb 18 06:47 cml2_2.9.1-7_amd64-7.iso
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+
+
+
 mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virsh undefine cml2 --remove-all-storage
 error: Storage volume 'vda'(/var/lib/libvirt/images/cml2.qcow2) is not managed by libvirt. Remove it manually.
 
