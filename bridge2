@@ -1,3 +1,21 @@
+mitsucity@cml-controller:~$ sudo systemctl status virl2-compute-setup.service --no-pager
+● virl2-compute-setup.service - CML2 Compute Host Registration
+     Loaded: loaded (/usr/lib/systemd/system/virl2-compute-setup.service; enabled; preset: enabled)
+     Active: active (exited) since Sun 2026-03-01 13:07:09 UTC; 1min 9s ago
+    Process: 336583 ExecStart=/usr/local/bin/virl2-compute-setup.sh (code=exited, status=0/SUCCESS)
+   Main PID: 336583 (code=exited, status=0/SUCCESS)
+        CPU: 211ms
+
+Mar 01 13:07:09 cml-controller systemd[1]: Started virl2-compute-setup.service - CML2 Compute Host Registration.
+Mar 01 13:07:09 cml-controller virl2-compute-setup.sh[336583]: controller address: ::1
+Mar 01 13:07:10 cml-controller virl2-compute-setup.sh[336583]: WARNING: virl2-compute-setup:130:URL: https://[::1]:443/api/internal/computes
+Mar 01 13:07:10 cml-controller virl2-compute-setup.sh[336583]: WARNING: virl2-compute-setup:48:registration was unsuccessful: {"description":"Unauthorized","code":401}
+mitsucity@cml-controller:~$ 
+
+
+
+
+
 ✅ 直す手順（コピペでOK）
 1) まず現状確認（見たいだけ）
 sudo ls -ld /var/local/virl2/secrets /var/local/virl2/secrets/admin_hosts
