@@ -1,3 +1,12 @@
+まずこれだけ貼って
+
+sudo systemctl cat virl2-compute-setup.service
+
+sudo journalctl -u virl2-compute-setup.service -n 200 --no-pager
+
+この2つの出力が来たら、「どのディレクトリを誰に chown すべきか」を一発で確定して、最短コマンドだけ出す。
+
+
 い、ここで核心に触れた 🧠🔥
 
 今の状態を冷静に読む。
