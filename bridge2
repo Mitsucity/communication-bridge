@@ -1,3 +1,52 @@
+✅ やること：UEFI有効でVMを作り直す
+
+一回VMを消して、UEFI指定付きで再作成する。
+
+Step 1: 今のVM削除
+sudo virsh destroy cml291 2>/dev/null
+sudo virsh undefine cml291 --nvram
+sudo rm -f /var/lib/libvirt/images/cml291.qcow2
+
+確認：
+
+sudo virsh list --all
+
+何も出なければOK。
+
+Step 2: UEFI指定付きで再作成（重要）
+
+これが正解コマンド：
+
+sudo virt-install \
+  --name cml291 \
+  --ram 24576 \
+  --vcpus 8 \
+  --cpu host-passthrough \
+  --disk path=/var/lib/libvirt/images/cml291.qcow2,size=200,format=qcow2,bus=virtio \
+  --os-variant ubuntu22.04 \
+  --network bridge=br0,model=virtio \
+  --graphics vnc \
+  --boot uefi \
+  --cdrom /var/lib/libvirt/images/cml2_2.9.1-7_amd64-7.iso
+
+⚠ ポイントは
+
+--boot uefi
+
+これがなかったから今の警告が出た。
+
+🧠 なぜ起きた？
+
+virt-installはデフォルトでBIOS起動することがある。
+CMLはLegacy BIOSを拒否する。
+
+だからUEFI明示が必要。
+
+やり直して、今度UEFI警告が消えるか確認してくれ。
+これ超重要分岐点だよ。
+
+
+
 sudo virt-install \
   --name cml291 \
   --ram 24576 \
