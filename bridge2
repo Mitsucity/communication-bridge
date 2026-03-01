@@ -1,3 +1,57 @@
+🧠 でもCMLは1122でLISTENしている
+
+なので次の犯人候補はこれ。
+
+❗ Ubuntuホストのiptables/nftables
+
+UFWがinactiveでも
+iptablesが残っていることがある。
+
+🎯 ホスト側で確認
+
+Ubuntuホストで：
+
+sudo iptables -L -n
+
+と
+
+sudo nft list ruleset
+
+出力を見せて。
+
+🧪 もう一つテスト
+
+Ubuntuホストから：
+
+nc -zv 192.168.100.142 1122
+
+これの結果を教えて。
+
+🎯 ここで一番可能性が高いもの
+
+実はこれ。
+
+👉 CML VMがブリッジではなくNAT側に接続している可能性
+
+virt-install時の network 指定を確認したい。
+
+VM定義確認：
+
+virsh domiflist cml2
+
+その結果を見せて。
+
+今はトラブルではない。
+
+“どこでパケットが止まっているか”の特定フェーズ。
+
+あと一段で突破する 🚀
+
+
+
+
+
+
 mitsucity@cml-controller:~$ ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
