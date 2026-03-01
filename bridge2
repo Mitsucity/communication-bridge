@@ -1,3 +1,60 @@
+1) FCS を dropfolder に置いて名前を合わせる
+
+公式手順だと、refplat_images.iso という名前が期待される。
+
+sudo mkdir -p /var/local/virl2/dropfolder
+sudo mv /var/local/virl2/images/refplat-20250616-fcs.iso /var/local/virl2/dropfolder/refplat_images.iso
+
+（※ すでに /var/local/virl2/images/ にあるなら上の mv でOK。パス違ったら合わせてね）
+
+2) Supplemental も置いておく（名前はそのままでOK）
+
+※Supplementalは“後でCD/DVD差し替え→同じCopyボタン再実行”で通すのがよくある流れ。
+
+sudo mv /var/local/virl2/images/refplat-20250616-supplemental.iso /var/local/virl2/dropfolder/
+次にやること（GUIでコピー実行）
+3) Cockpit（9090）で Copy Refplat ISO を実行
+
+ブラウザで：
+
+https://192.168.100.142:9090 を開く
+
+左メニュー CML2
+
+Maintenance の中の Copy Refplat ISO
+
+Copy Refplat ISO ボタンを押す
+
+これが終わると、Node definitions / image definitions が登録されて、CMLのUIでノードが増える。
+
+もし途中で切れたり不安なら、ドキュメントにある通り copy-refplat-iso-to-disk.sh を使う方法もある（ただしまずはボタンでOK）。
+
+Supplemental の反映
+
+Supplementalは環境によって「Copy Refplat ISO をもう一回」で追加分が入る運用が多い。
+やり方は2つある：
+
+A) いちばん簡単（推奨）
+
+1回目（FCS）完了後に、VMのCD/DVDを supplemental ISO に差し替えて、同じ Copy Refplat ISO をもう一度。
+
+B) ISOファイルから使いたい（いまの君の状態）
+
+補助的に dropfolder を使って再実行する流れも公式に書かれてる（refplat_images.iso を置いて、サービス再起動して、Copyを再実行）。
+Supplementalの“ファイル指定の名前ルール”は版によって揺れるので、AのCD/DVD差し替えが確実。
+
+いま確認したいこと（次の1手が決まる）
+
+Cockpit（:9090）に入れてる？
+入れてるなら、まず CML2 → Copy Refplat ISO のボタンが見えてるはず。
+
+ボタン押したあと、画面下の Output に code 0 / completed みたいなのが出る
+
+その後、CMLの通常UI（https://192.168.100.142）で Tools → Node and Image Definitions を見るとノードが増える
+
+まずは FCSの Copy Refplat ISO を実行して、Outputの最後の数行を貼って。そこまで行けば、Supplementalの差し替え手順をそのまま続ける。
+
+
 mitsucity@cml-controller:/var/local/virl2$ ls
 README-termserv.md  config                  default-network.xml   install-history.log  metadata-patches.d  prepdotconfig.sh       smart
 backup              core-driver-config.yml  devicemux-config.yml  ipsnooper.yml        nginx-temp-folder   sample-labs            socks
