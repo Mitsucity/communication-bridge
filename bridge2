@@ -1,3 +1,63 @@
+🧠 CML 2.9.1 での正しい refplat 取り込み方法
+
+CML 2.9.x では、
+
+refplat ISO は GUIからアップロードしない。
+
+正解は：
+
+controller の OS 側で ISO をインポートする。
+
+🔥 正しい手順（CLIでやる）
+
+いまログインできているよね？
+
+mitsucity-sysadmin@cml-controller:~$
+
+ここからやる。
+
+① ISOがあるか確認
+ls /var/lib/libvirt/images | grep refplat
+② fcs をインポート
+sudo cml import refplat /var/lib/libvirt/images/refplat-20250616-fcs.iso
+
+これが正しいコマンド。
+
+なぜGUIではないのか？
+
+CML 2.9 からは
+
+Node Definition Import → yaml用
+
+Image Upload → qcow2用
+
+refplat → CLI import専用
+
+構造が変わっている。
+
+だからGUIにISOの場所がない。
+
+supplemental が大きすぎる件
+
+29GBをブラウザ経由で入れる設計ではない。
+
+CLIで直接展開させるのが正解。
+
+🎯 いまやること
+
+CMLのVMコンソールに戻って
+
+sudo cml import refplat /var/lib/libvirt/images/refplat-20250616-fcs.iso
+
+を実行。
+
+エラーが出たらそのまま貼って。
+
+ここが一番大事な分岐。
+
+
+
+
 
 mitsuntu@mitsuntu-FRONTIER:~$ sudo virsh console cml291
 [sudo] password for mitsuntu: 
