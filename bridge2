@@ -1,3 +1,25 @@
+mitsucity@cml-controller:~$ sudo systemctl status ssh
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/usr/lib/systemd/system/ssh.service; disabled; preset: enabled)
+     Active: active (running) since Sun 2026-03-01 01:53:31 UTC; 7s ago
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+    Process: 112188 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
+   Main PID: 112190 (sshd)
+      Tasks: 1 (limit: 28735)
+     Memory: 1.2M (peak: 1.5M)
+        CPU: 21ms
+     CGroup: /system.slice/ssh.service
+             └─112190 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+
+Mar 01 01:53:31 cml-controller systemd[1]: Starting ssh.service - OpenBSD Secure Shell server...
+Mar 01 01:53:31 cml-controller sshd[112190]: Server listening on 0.0.0.0 port 1122.
+Mar 01 01:53:31 cml-controller sshd[112190]: Server listening on :: port 1122.
+Mar 01 01:53:31 cml-controller systemd[1]: Started ssh.service - OpenBSD Secure Shell server.
+mitsucity@cml-controller:~$ 
+
+
+
 mitsuntu@mitsuntu-FRONTIER:~$ uname -a
 Linux mitsuntu-FRONTIER 6.17.0-14-generic #14~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Jan 15 15:52:10 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
 mitsuntu@mitsuntu-FRONTIER:~$ lsb_release -a
@@ -98,6 +120,9 @@ mitsuntu@mitsuntu-FRONTIER:~/Documents/ansible-lab$ more change.yml
 - name: Simple local change
   hosts: local
   gather_facts: no
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ scp -P 1122 refplat-20250616-fcs.iso sysadmin@192.168.100.142:/home/sysadmin
+ssh: connect to host 192.168.100.142 port 1122: Connection refused
+scp: Connection closed
 
   tasks:
     - name: Creatge a test filemitsuntu@mitsuntu-FRONTIER:~/Downloads$ scp -P 1122 refplat-20250616-fcs.iso sysadmin@192.168.100.142:/home/sysadmin
