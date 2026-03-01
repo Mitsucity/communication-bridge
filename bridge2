@@ -1,3 +1,24 @@
+mitsucity@cml-controller:/var/local/virl2$ ls
+README-termserv.md  config                  default-network.xml   install-history.log  metadata-patches.d  prepdotconfig.sh       smart
+backup              core-driver-config.yml  devicemux-config.yml  ipsnooper.yml        nginx-temp-folder   sample-labs            socks
+base_images.state   createpubkeyhash.sh     dropfolder            lld-config.yml       node-definitions    secrets                ssh_admin_config
+certs               db_migrations           images                logging-config.yml   pcaps               send-stats-config.yml  sshd_cluster_config
+mitsucity@cml-controller:/var/local/virl2$ 
+mitsucity@cml-controller:/var/local/virl2$ 
+mitsucity@cml-controller:/var/local/virl2$ cd i
+images/              install-history.log  ipsnooper.yml        
+mitsucity@cml-controller:/var/local/virl2$ cd images/
+mitsucity@cml-controller:/var/local/virl2/images$ ls
+at
+mitsucity@cml-controller:/var/local/virl2/images$ sudo chown mitsucity: /var/local/virl2/images/
+[sudo] password for mitsucity: 
+mitsucity@cml-controller:/var/local/virl2/images$ ls
+at  refplat-20250616-fcs.iso  refplat-20250616-supplemental.iso
+mitsucity@cml-controller:/var/local/virl2/images$ sudo cml image import refplat-20250616-fcs.iso
+sudo: cml: command not found
+
+
+
 mitsucity@cml-controller:~$ df -h
 Filesystem                Size  Used Avail Use% Mounted on
 tmpfs                     2.4G  1.4M  2.4G   1% /run
