@@ -1,3 +1,56 @@
+🟢 Step 1: まず存在確認（絶対やる）
+ls -lh /home/mitsuntu/Downloads/refplat-20250616-*.iso
+
+2つ見えるはず：
+
+refplat-20250616-fcs.iso
+
+refplat-20250616-supplemental.iso
+
+ここで「No such file」なら止まって教えて。
+
+🟢 Step 2: 安全コピー（移動じゃなくコピー）
+
+いきなり移動しない。まずコピー。
+
+sudo cp -av /home/mitsuntu/Downloads/refplat-20250616-*.iso /var/lib/libvirt/images/
+
+終わったら確認：
+
+sudo ls -lh /var/lib/libvirt/images | grep refplat
+🟢 Step 3: 所有者をlibvirt用に変更
+sudo chown libvirt-qemu:kvm /var/lib/libvirt/images/refplat-20250616-*.iso
+sudo chmod 0644 /var/lib/libvirt/images/refplat-20250616-*.iso
+
+確認：
+
+sudo ls -lh /var/lib/libvirt/images | grep refplat
+
+こうなれば成功：
+
+-rw-r--r-- 1 libvirt-qemu kvm  xxxx refplat-20250616-fcs.iso
+-rw-r--r-- 1 libvirt-qemu kvm  xxxx refplat-20250616-supplemental.iso
+🟢 Step 4: 元ファイル削除（最後）
+
+コピーと権限確認できてから：
+
+rm -f /home/mitsuntu/Downloads/refplat-20250616-*.iso
+💡 なぜこの順番？
+
+cp → 確認 → chown → 確認 → rm
+
+この流れなら絶対に事故らない。
+
+実行結果を貼ってくれれば
+そのまま CML VM 作成フェーズ に進む 🚀
+
+
+
+
+
+
+
+
 mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virsh destroy cml2 2>/dev/null
 
 mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo virsh shutdown cml2 2>/dev/null
