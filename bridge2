@@ -1,3 +1,30 @@
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ ip -br link show
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+enp4s0           UP             a8:a1:59:f8:1d:00 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+virbr0           DOWN           52:54:00:15:54:f5 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+br0              UP             d2:39:fd:6a:70:e7 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ ip -br addr show br0
+br0              UP             192.168.100.89/24 2400:4052:8e3:fb00:4925:88ca:9a9d:5a59/64 2400:4052:8e3:fb00:c34c:48c1:7084:f403/64 fe80::ffde:bf86:98f7:2e51/64 
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ bridge link
+2: enp4s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 100 
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ lsmod | egrep 'kvm|kvm_intel|kvm_amd'
+kvm_intel             569344  0
+kvm                  1445888  1 kvm_intel
+irqbypass              16384  1 kvm
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ virsh list --all
+ Id   Name   State
+-----------------------
+ -    cml2   shut off
+
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ df -h /var/lib/libvirt/images
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n1p2  1.9T   67G  1.7T   4% /
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ ls -lh /var/lib/libvirt/images | head
+ls: cannot open directory '/var/lib/libvirt/images': Permission denied
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+
+
+
 1-1) br0 が生きてるか
 ip -br link show
 ip -br addr show br0
