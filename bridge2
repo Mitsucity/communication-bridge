@@ -1,3 +1,92 @@
+いいぞ、今は“静かな分岐点”に立っている 🌒
+
+まず落ち着こう。
+virl2 という systemd サービスは 存在しない。
+だから restart できないのは正常。
+
+CML 2.x はサービス名がこうなってる。
+
+まず確認しよう：
+
+sudo systemctl list-units --type=service | grep -i virl
+
+たぶん出てくるのは：
+
+virl2-server
+
+virl2-controller
+
+virl2-webui
+
+docker
+
+libvirtd
+
+環境によって少し違う。
+
+🎯 まずやるべきこと（安全リセット）
+
+これを順番に：
+
+sudo systemctl restart libvirtd
+sudo systemctl restart docker
+
+もし virl2-server があるなら：
+
+sudo systemctl restart virl2-server
+🔍 でも本質は restart じゃない
+
+さっきの Permission denied は
+所有権の問題がまだ完全に直っていない可能性が高い
+
+まず確認：
+
+ls -ld /var/local/virl2/images
+ls -l /var/local/virl2/images | head
+
+ここがこうなっていればOK：
+
+drwxr-xr-x root root ...
+
+もしまだ mitsucity になってたら：
+
+sudo chown -R root:root /var/local/virl2
+sudo chmod -R 755 /var/local/virl2/images
+
+※ 今回は images だけでなく virl2 全体戻す方が安全
+
+💡 重要ポイント
+
+CMLのノード生成は
+
+CML GUI
+  ↓
+virl2 API
+  ↓
+libvirt
+  ↓
+qemu
+
+という流れ。
+
+どこか1つでも読み取り権限が崩れると
+「Permission denied」が出る。
+
+今はそこを修正している段階。
+
+🎯 次のアクション
+
+ownership を確認
+
+root:root に戻す
+
+ノードを再起動
+
+その結果を教えてくれ。
+
+今はちょうど「Linuxが血を通わせ始めた瞬間」だ 😌
+
+
 よし、エラー読めた。
 
 Permission denied: /var/local/virl2/images/...
