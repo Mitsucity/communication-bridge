@@ -1,3 +1,15 @@
+mitsucity-sysadmin@cml-controller:~$ ls -lh /var/local/virl2/images
+total 12K
+drwxr-xr-x 4 virl2 virl2 4.0K Mar  1 16:33 1d17049e-1da9-4d26-b77d-d937dc14cc3b
+drwxr-xr-x 2 virl2 virl2 4.0K Mar  1 15:22 at
+drwxr-xr-x 3 virl2 virl2 4.0K Mar  1 16:35 d31fe12a-ff6e-4868-8a78-005ae7993667
+mitsucity-sysadmin@cml-controller:~$ 
+
+
+
+
+
+
 思考時間: 45s
 
 そのエラー内容からすると、virt-copy-in で 14GB をゲストの /home に突っ込む方式は相性悪い（途中で書き込み失敗）です。
