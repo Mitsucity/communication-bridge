@@ -1,3 +1,190 @@
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo iptables -L -n
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+LIBVIRT_INP  0    --  0.0.0.0/0            0.0.0.0/0           
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+LIBVIRT_FWX  0    --  0.0.0.0/0            0.0.0.0/0           
+LIBVIRT_FWI  0    --  0.0.0.0/0            0.0.0.0/0           
+LIBVIRT_FWO  0    --  0.0.0.0/0            0.0.0.0/0           
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+LIBVIRT_OUT  0    --  0.0.0.0/0            0.0.0.0/0           
+
+Chain LIBVIRT_FWI (1 references)
+target     prot opt source               destination         
+ACCEPT     0    --  0.0.0.0/0            192.168.122.0/24     ctstate RELATED,ESTABLISHED
+REJECT     0    --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-port-unreachable
+
+Chain LIBVIRT_FWO (1 references)
+target     prot opt source               destination         
+ACCEPT     0    --  192.168.122.0/24     0.0.0.0/0           
+REJECT     0    --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-port-unreachable
+
+Chain LIBVIRT_FWX (1 references)
+target     prot opt source               destination         
+ACCEPT     0    --  0.0.0.0/0            0.0.0.0/0           
+
+Chain LIBVIRT_INP (1 references)
+target     prot opt source               destination         
+ACCEPT     17   --  0.0.0.0/0            0.0.0.0/0            udp dpt:53
+ACCEPT     6    --  0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+ACCEPT     17   --  0.0.0.0/0            0.0.0.0/0            udp dpt:67
+ACCEPT     6    --  0.0.0.0/0            0.0.0.0/0            tcp dpt:67
+
+Chain LIBVIRT_OUT (1 references)
+target     prot opt source               destination         
+ACCEPT     17   --  0.0.0.0/0            0.0.0.0/0            udp dpt:53
+ACCEPT     6    --  0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+ACCEPT     17   --  0.0.0.0/0            0.0.0.0/0            udp dpt:68
+ACCEPT     6    --  0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo nft list ruleset
+# Warning: table ip filter is managed by iptables-nft, do not touch!
+table ip filter {
+	chain LIBVIRT_INP {
+		iifname "virbr0" udp dport 53 counter packets 0 bytes 0 accept
+		iifname "virbr0" tcp dport 53 counter packets 0 bytes 0 accept
+		iifname "virbr0" udp dport 67 counter packets 0 bytes 0 accept
+		iifname "virbr0" tcp dport 67 counter packets 0 bytes 0 accept
+	}
+
+	chain INPUT {
+		type filter hook input priority filter; policy accept;
+		counter packets 1555556 bytes 13413198824 jump LIBVIRT_INP
+	}
+
+	chain LIBVIRT_OUT {
+		oifname "virbr0" udp dport 53 counter packets 0 bytes 0 accept
+		oifname "virbr0" tcp dport 53 counter packets 0 bytes 0 accept
+		oifname "virbr0" udp dport 68 counter packets 0 bytes 0 accept
+		oifname "virbr0" tcp dport 68 counter packets 0 bytes 0 accept
+	}
+
+	chain OUTPUT {
+		type filter hook output priority filter; policy accept;
+		counter packets 1632004 bytes 11065054262 jump LIBVIRT_OUT
+	}
+
+	chain LIBVIRT_FWO {
+		ip saddr 192.168.122.0/24 iifname "virbr0" counter packets 0 bytes 0 accept
+		iifname "virbr0" counter packets 0 bytes 0 reject
+	}
+
+	chain FORWARD {
+		type filter hook forward priority filter; policy accept;
+		counter packets 91 bytes 7150 jump LIBVIRT_FWX
+		counter packets 91 bytes 7150 jump LIBVIRT_FWI
+		counter packets 91 bytes 7150 jump LIBVIRT_FWO
+	}
+
+	chain LIBVIRT_FWI {
+		ip daddr 192.168.122.0/24 oifname "virbr0" ct state related,established counter packets 0 bytes 0 accept
+		oifname "virbr0" counter packets 0 bytes 0 reject
+	}
+
+	chain LIBVIRT_FWX {
+		iifname "virbr0" oifname "virbr0" counter packets 0 bytes 0 accept
+	}
+}
+# Warning: table ip nat is managed by iptables-nft, do not touch!
+table ip nat {
+	chain LIBVIRT_PRT {
+		ip saddr 192.168.122.0/24 ip daddr 224.0.0.0/24 counter packets 25 bytes 2920 return
+		ip saddr 192.168.122.0/24 ip daddr 255.255.255.255 counter packets 0 bytes 0 return
+		ip saddr 192.168.122.0/24 ip daddr != 192.168.122.0/24 ip protocol tcp counter packets 0 bytes 0 masquerade to :1024-65535
+		ip saddr 192.168.122.0/24 ip daddr != 192.168.122.0/24 ip protocol udp counter packets 0 bytes 0 masquerade to :1024-65535
+		ip saddr 192.168.122.0/24 ip daddr != 192.168.122.0/24 counter packets 0 bytes 0 masquerade
+	}
+
+	chain POSTROUTING {
+		type nat hook postrouting priority srcnat; policy accept;
+		counter packets 34269 bytes 2212888 jump LIBVIRT_PRT
+	}
+}
+# Warning: table ip mangle is managed by iptables-nft, do not touch!
+table ip mangle {
+	chain LIBVIRT_PRT {
+		oifname "virbr0" udp dport 68 counter packets 0 bytes 0 xt target "CHECKSUM"
+	}
+
+	chain POSTROUTING {
+		type filter hook postrouting priority mangle; policy accept;
+		counter packets 1632318 bytes 11065089863 jump LIBVIRT_PRT
+	}
+}
+table ip6 filter {
+	chain LIBVIRT_INP {
+	}
+
+	chain INPUT {
+		type filter hook input priority filter; policy accept;
+		counter packets 17744 bytes 87093997 jump LIBVIRT_INP
+	}
+
+	chain LIBVIRT_OUT {
+	}
+
+	chain OUTPUT {
+		type filter hook output priority filter; policy accept;
+		counter packets 15978 bytes 2033395 jump LIBVIRT_OUT
+	}
+
+	chain LIBVIRT_FWO {
+	}
+
+	chain FORWARD {
+		type filter hook forward priority filter; policy accept;
+		counter packets 0 bytes 0 jump LIBVIRT_FWX
+		counter packets 0 bytes 0 jump LIBVIRT_FWI
+		counter packets 0 bytes 0 jump LIBVIRT_FWO
+	}
+
+	chain LIBVIRT_FWI {
+	}
+
+	chain LIBVIRT_FWX {
+	}
+}
+table ip6 nat {
+	chain LIBVIRT_PRT {
+	}
+
+	chain POSTROUTING {
+		type nat hook postrouting priority srcnat; policy accept;
+		counter packets 0 bytes 0 jump LIBVIRT_PRT
+	}
+}
+table ip6 mangle {
+	chain LIBVIRT_PRT {
+	}
+
+	chain POSTROUTING {
+		type filter hook postrouting priority mangle; policy accept;
+		counter packets 16113 bytes 2051600 jump LIBVIRT_PRT
+	}
+}
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ nc -zv 192.168.100.142 1122
+Connection to 192.168.100.142 1122 port [tcp/*] succeeded!
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ virsh domiflist cml2
+ Interface   Type     Source   Model    MAC
+-----------------------------------------------------------
+ vnet1       bridge   br0      virtio   52:54:00:e3:41:f9
+
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+
+
+
+
+
+
+
+
+
+
+
+
 🧠 でもCMLは1122でLISTENしている
 
 なので次の犯人候補はこれ。
