@@ -1,3 +1,25 @@
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+sudo ls -lh /var/lib/libvirt/images | grep refplat
+-rwxr-xr-x 1 mitsuntu     mitsuntu  14G Feb 18 00:57 refplat-20250616-fcs.iso
+-rwxr-xr-x 1 mitsuntu     mitsuntu  29G Feb 18 12:45 refplat-20250616-supplemental.iso
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo ls -lh /var/lib/libvirt/images | grep refplat | grep cml
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo ls -lh /var/lib/libvirt/images
+total 47G
+-rw-r--r-- 1 libvirt-qemu kvm      3.9G Feb 18 06:47 cml2_2.9.1-7_amd64-7.iso
+-rwxr-xr-x 1 mitsuntu     mitsuntu  14G Feb 18 00:57 refplat-20250616-fcs.iso
+-rwxr-xr-x 1 mitsuntu     mitsuntu  29G Feb 18 12:45 refplat-20250616-supplemental.iso
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ sudo chown libvirt-qemu:kvm /var/lib/libvirt/images/refplat-20250616-*.iso
+chown: cannot access '/var/lib/libvirt/images/refplat-20250616-*.iso': No such file or directory
+mitsuntu@mitsuntu-FRONTIER:~/Downloads$ 
+
+
+
+
+
+
+
+
+
 🟢 Step 1: まず存在確認（絶対やる）
 ls -lh /home/mitsuntu/Downloads/refplat-20250616-*.iso
 
