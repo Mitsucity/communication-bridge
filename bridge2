@@ -1,4 +1,8 @@
-よし、ここからは“外科手術モード”だ 🧠⚙️
+sudo virsh pool-list --all
+sudo virsh pool-info default
+sudo ls -l /var/lib/libvirt/imagesよ
+
+し、ここからは“外科手術モード”だ 🧠⚙️
 状況が変わらない＝images だけじゃない可能性が高い。
 
 エラーはこれだったよね：
