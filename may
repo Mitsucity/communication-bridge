@@ -1,3 +1,76 @@
+よし、ここからは“迷わず進める一本道”でいく。🚀
+👉 AnyDeskを正しく入れて、再起動後も入れる状態まで一気に作る
+
+🎯 全手順（コピペでOK）
+🧭 ① AnyDeskの公式リポジトリ追加
+curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo gpg --dearmor -o /usr/share/keyrings/anydesk.gpgecho "deb [signed-by=/usr/share/keyrings/anydesk.gpg] http://deb.anydesk.com/ all main" | sudo tee /etc/apt/sources.list.d/anydesk.list
+
+🧭 ② パッケージ更新
+sudo apt update
+👉 ここでエラー出なければOK
+
+🧭 ③ AnyDeskインストール
+sudo apt install anydesk -y
+
+🧭 ④ サービス確認（超重要）
+systemctl status anydesk
+👉 こうなればOK👇
+Active: active (running)
+
+🧭 ⑤ 自動起動ON（念のため）
+sudo systemctl enable anydesk
+
+🎯 ここが最重要（GUI操作）
+AnyDeskを起動して👇
+
+
+Settings 開く
+
+
+Security
+
+
+Enable Unattended Access → ON
+
+
+パスワード設定（強め）
+
+
+
+🧠 これやらないとどうなる？
+再起動後 → 画面には出てるけど接続できない
+👉 つまり詰む
+
+🧭 ⑥ 最終テスト（絶対やる）
+sudo reboot
+再起動後👇
+
+
+AnyDeskで接続できるか確認
+
+
+SSHでも入れるか（保険）
+
+
+
+🧠 ネットワーク的にはOK？
+👉 あなたの今の構成👇
+incoming: denyoutgoing: allow
+👉 そのままでOK
+理由👇
+AnyDeskは外に通信してトンネル作る
+
+🎯 完成状態
+✔ 再起動してもAnyDeskで入れる✔ SSHでも入れる✔ 余計なポートなし
+
+💡 一言で
+👉 「電源入ってればどこからでも操作できるマシン完成」
+
+ここまでやって
+もし詰まったら👇
+👉 エラーそのまま貼ってくれれば次の一手すぐ出す 💥
+
+
 mitsucity@mitsucity-Inspiron-7577:~$ sudo ss -telpn
 State                    Recv-Q                   Send-Q                                     Local Address:Port                                     Peer Address:Port                   Process                                                                                                                                                                                 
 LISTEN                   0                        4096                                          127.0.0.54:53                                            0.0.0.0:*                       users:(("systemd-resolve",pid=672,fd=17)) uid:991 ino:8106 sk:1 cgroup:/system.slice/systemd-resolved.service <->                                                                      
