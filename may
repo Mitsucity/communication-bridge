@@ -1,3 +1,80 @@
+mitsucity@mitsucity-Inspiron-7577:~$ sudo systemctl stop 
+Display all 214 possibilities? (y or n)
+accounts-daemon.service                                     phpsessionclean.timer                                       sys-fs-fuse-connections.mount
+alsa-restore.service                                        plymouth-log.service                                        sysinit.target
+anacron.timer                                               plymouth-quit-wait.service                                  sys-kernel-config.mount
+apache2.service                                             plymouth-read-write.service                                 sys-kernel-debug.mount
+apparmor.service                                            plymouth-start.service                                      sys-kernel-tracing.mount
+apport.service                                              polkit.service                                              syslog.service
+apt-daily.timer                                             postfix.service                                             syslog.socket
+apt-daily-upgrade.timer                                     postfix@-.service                                           sysstat-collect.timer
+autovt@tty1.service                                         power-profiles-daemon.service                               sysstat.service
+avahi-daemon.service                                        procps.service                                              sysstat-summary.timer
+avahi-daemon.socket                                         proc-sys-fs-binfmt_misc.automount                           "system-chrome\\x2dremote\\x2ddesktop.slice"
+basic.target                                                proc-sys-fs-binfmt_misc.mount                               systemd-ask-password-plymouth.path
+bluetooth.service                                           remote-fs-pre.target                                        systemd-ask-password-wall.path
+bluetooth.target                                            remote-fs.target                                            systemd-backlight@backlight:intel_backlight.service
+boot-efi.mount                                              rpcbind.target                                              systemd-binfmt.service
+colord.service                                              rpc_pipefs.target                                           "systemd-fsck@dev-disk-by\\x2duuid-776C\\x2d7DD8.service"
+console-setup.service                                       rpc-statd-notify.service                                    systemd-fsckd.socket
+cron.service                                                rsyslog.service                                             systemd-initctl.socket
+cryptsetup.target                                           rtkit-daemon.service                                        systemd-journald-dev-log.socket
+cups-browsed.service                                        runlevel2.target                                            systemd-journald.service
+cups.path                                                   runlevel3.target                                            systemd-journald.socket
+cups.service                                                runlevel4.target                                            systemd-journal-flush.service
+cups.socket                                                 runlevel5.target                                            systemd-logind.service
+dbus-fi.w1.wpa_supplicant1.service                          run-rpc_pipefs.mount                                        systemd-modules-load.service
+dbus-org.bluez.service                                      run-snapd-ns-firefox.mnt.mount                              systemd-oomd.service
+dbus-org.freedesktop.Avahi.service                          "run-snapd-ns-firmware\\x2dupdater.mnt.mount"               systemd-oomd.socket
+dbus-org.freedesktop.login1.service                         "run-snapd-ns-mesa\\x2d2404.mnt.mount"                      systemd-random-seed.service
+dbus-org.freedesktop.ModemManager1.service                  run-snapd-ns.mount                                          systemd-remount-fs.service
+dbus-org.freedesktop.oom1.service                           "run-snapd-ns-snapd\\x2ddesktop\\x2dintegration.mnt.mount"  systemd-resolved.service
+dbus-org.freedesktop.resolve1.service                       "run-snapd-ns-snap\\x2dstore.mnt.mount"                     systemd-rfkill.socket
+dbus-org.freedesktop.thermald.service                       run-user-1000-doc.mount                                     systemd-sysctl.service
+dbus-org.freedesktop.timesync1.service                      run-user-1000-gvfs.mount                                    systemd-sysext.socket
+dbus.service                                                run-user-1000.mount                                         systemd-timesyncd.service
+dbus.socket                                                 session-33351.scope                                         systemd-tmpfiles-clean.timer
+default.target                                              session-c1.scope                                            systemd-tmpfiles-setup-dev-early.service
+dev-hugepages.mount                                         session-c3.scope                                            systemd-tmpfiles-setup-dev.service
+dev-mqueue.mount                                            setvtrgb.service                                            systemd-udevd-control.socket
+display-manager.service                                     slices.target                                               systemd-udevd-kernel.socket
+dpkg-db-backup.timer                                        snap-bare-5.mount                                           systemd-udevd.service
+e2scrub_all.timer                                           snap-core22-2339.mount                                      systemd-udev-trigger.service
+fstrim.timer                                                snap-core22-2411.mount                                      systemd-update-utmp.service
+fwupd-refresh.timer                                         snap-core24-1499.mount                                      systemd-user-sessions.service
+fwupd.service                                               snap-core24-1587.mount                                      system-getty.slice
+getty-pre.target                                            snapd.apparmor.service                                      system-modprobe.slice
+getty.target                                                snapd.mounts-pre.target                                     system-postfix.slice
+getty@tty1.service                                          snapd.mounts.target                                         "system-systemd\\x2dbacklight.slice"
+graphical.target                                            snapd.seeded.service                                        "system-systemd\\x2dfsck.slice"
+integritysetup.target                                       snapd.service                                               thermald.service
+kerneloops.service                                          snapd.socket                                                timers.target
+keyboard-setup.service                                      snap-firefox-8191.mount                                     time-set.target
+kmod.service                                                snap-firefox-8247.mount                                     tl-license-stats.timer
+kmod-static-nodes.service                                   "snap-firmware\\x2dupdater-224.mount"                       tlwebaccess.service
+lightdm.service                                             "snap-firmware\\x2dupdater-226.mount"                       tlwebadm.service
+lm-sensors.service                                          "snap-gnome\\x2d42\\x2d2204-226.mount"                      udev.service
+local-fs-pre.target                                         "snap-gnome\\x2d42\\x2d2204-247.mount"                      udisks2.service
+local-fs.target                                             "snap-gnome\\x2d46\\x2d2404-153.mount"                      ufw.service
+logrotate.timer                                             "snap-gtk\\x2dcommon\\x2dthemes-1535.mount"                 unattended-upgrades.service
+man-db.timer                                                "snap-mesa\\x2d2404-1165.mount"                             update-notifier-download.timer
+ModemManager.service                                        snap-snapd-26382.mount                                      update-notifier-motd.timer
+motd-news.timer                                             snap-snapd-26865.mount                                      upower.service
+multi-user.target                                           "snap-snapd\\x2ddesktop\\x2dintegration-357.mount"          user@1000.service
+networkd-dispatcher.service                                 "snap-snapd\\x2ddesktop\\x2dintegration-361.mount"          user-1000.slice
+NetworkManager.service                                      "snap-snap\\x2dstore-1338.mount"                            user-runtime-dir@1000.service
+NetworkManager-wait-online.service                          "snap-snap\\x2dstore-1367.mount"                            user.slice
+network-online.target                                       sockets.target                                              uuidd.socket
+network-pre.target                                          sound.target                                                veritysetup.target
+network.target                                              sshd.service                                                vsmagent.service
+nfs-client.target                                           ssh.service                                                 vsmserver.service
+nss-lookup.target                                           ssh.socket                                                  whoopsie.path
+nss-user-lookup.target                                      swap.img.swap                                               wpa_supplicant.service
+openvpn.service                                             swap.target                                                 
+paths.target                                                switcheroo-control.service    
+
+
+
 mitsucity@mitsucity-Inspiron-7577:~$ ps -fp 784727
 UID          PID    PPID  C STIME TTY          TIME CMD
 root      784727       1  0 May03 ?        00:00:08 /opt/thinlinc/libexec/python3 /opt/thinlinc/sbin/vsmserver
