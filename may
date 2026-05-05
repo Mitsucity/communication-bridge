@@ -1,3 +1,16 @@
+mitsucity@mitsucity-Inspiron-7577:~$ sudo ss -telpn
+State                    Recv-Q                   Send-Q                                     Local Address:Port                                     Peer Address:Port                   Process                                                                                                                                                                                 
+LISTEN                   0                        4096                                          127.0.0.54:53                                            0.0.0.0:*                       users:(("systemd-resolve",pid=672,fd=17)) uid:991 ino:8106 sk:1 cgroup:/system.slice/systemd-resolved.service <->                                                                      
+LISTEN                   0                        4096                                             0.0.0.0:22                                            0.0.0.0:*                       users:(("sshd",pid=1408,fd=3),("systemd",pid=1,fd=228)) ino:11416 sk:2 cgroup:/system.slice/ssh.socket <->                                                                             
+LISTEN                   0                        4096                                       127.0.0.53%lo:53                                            0.0.0.0:*                       users:(("systemd-resolve",pid=672,fd=15)) uid:991 ino:8104 sk:3 cgroup:/system.slice/systemd-resolved.service <->                                                                      
+LISTEN                   0                        511                                                    *:443                                                 *:*                       users:(("apache2",pid=1442,fd=6),("apache2",pid=1441,fd=6),("apache2",pid=1440,fd=6),("apache2",pid=1439,fd=6),("apache2",pid=1438,fd=6),("apache2",pid=1436,fd=6)) ino:11897 sk:4 cgroup:/system.slice/apache2.service v6only:0 <->
+LISTEN                   0                        511                                                    *:80                                                  *:*                       users:(("apache2",pid=1442,fd=4),("apache2",pid=1441,fd=4),("apache2",pid=1440,fd=4),("apache2",pid=1439,fd=4),("apache2",pid=1438,fd=4),("apache2",pid=1436,fd=4)) ino:11893 sk:5 cgroup:/system.slice/apache2.service v6only:0 <->
+LISTEN                   0                        4096                                                [::]:22                                               [::]:*                       users:(("sshd",pid=1408,fd=4),("systemd",pid=1,fd=229)) ino:10956 sk:6 cgroup:/system.slice/ssh.socket v6only:1 <->                                                                    
+mitsucity@mitsucity-Inspiron-7577:~$ 
+
+
+
+
 mitsucity@mitsucity-Inspiron-7577:~$ systemctl list-unit-files --type=service | grep enabled
 accounts-daemon.service                      enabled         enabled
 alsa-utils.service                           masked          enabled
