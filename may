@@ -1,3 +1,33 @@
+mitsucity@mitsucity-Inspiron-7577:~$ ps -fp 784727
+UID          PID    PPID  C STIME TTY          TIME CMD
+root      784727       1  0 May03 ?        00:00:08 /opt/thinlinc/libexec/python3 /opt/thinlinc/sbin/vsmserver
+mitsucity@mitsucity-Inspiron-7577:~$ ps -fp 784703
+UID          PID    PPID  C STIME TTY          TIME CMD
+root      784703       1  0 May03 ?        00:07:36 /opt/thinlinc/libexec/python3 /opt/thinlinc/sbin/vsmagent
+mitsucity@mitsucity-Inspiron-7577:~$ ps -fp 784727
+UID          PID    PPID  C STIME TTY          TIME CMD
+root      784727       1  0 May03 ?        00:00:08 /opt/thinlinc/libexec/python3 /opt/thinlinc/sbin/vsmserver
+mitsucity@mitsucity-Inspiron-7577:~$ ps - fp 784687
+error: garbage option
+
+Usage:
+ ps [options]
+
+ Try 'ps --help <simple|list|output|threads|misc|all>'
+  or 'ps --help <s|l|o|t|m|a>'
+ for additional help text.
+
+For more details see ps(1).
+mitsucity@mitsucity-Inspiron-7577:~$ ps -fp 784703
+UID          PID    PPID  C STIME TTY          TIME CMD
+root      784703       1  0 May03 ?        00:07:36 /opt/thinlinc/libexec/python3 /opt/thinlinc/sbin/vsmagent
+mitsucity@mitsucity-Inspiron-7577:~$ ps -fp 784748
+UID          PID    PPID  C STIME TTY          TIME CMD
+root      784748       1  0 May03 ?        00:00:00 /opt/thinlinc/libexec/python3 /opt/thinlinc/sbin/tlwebaccess
+mitsucity@mitsucity-Inspiron-7577:~$ 
+
+
+
 mitsucity@mitsucity-Inspiron-7577:~$ sudo ss -tulpn | grep -E '9000|904|1010|300'
 tcp   LISTEN 0      100                               0.0.0.0:9000       0.0.0.0:*    users:(("python3",pid=784727,fd=8))                                                                                                                                                                                                                                                                                         
 tcp   LISTEN 0      100                               0.0.0.0:904        0.0.0.0:*    users:(("python3",pid=784703,fd=6))                                                                                                                                                                                                                                                                                         
