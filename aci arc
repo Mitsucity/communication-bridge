@@ -1,0 +1,4 @@
+mkdir acisim
+tar -xf acisim-6.1-5e.ova -C acisim
+ls acisim
+rm acisim/acisim-6.1-5e.mf
