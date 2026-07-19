@@ -1,0 +1,17 @@
+• I remember everything in our current chat, but I don’t automatically recall
+  every past session word-for-word.
+
+  You can reopen an earlier Codex conversation:
+
+  - In the Codex app: search/select it from your chat history (Ctrl/Cmd + G).
+  - In the Codex CLI: run codex resume, or codex resume --last.
+  - To branch an old conversation without changing it: use codex fork.
+
+  Codex may also retain selected preferences or summaries through Memory, but
+  that’s separate from reopening the complete chat. You can manage it with /
+  memories; ChatGPT’s memory is managed under Settings → Personalization.
+
+  So yes—the closest equivalent to normal ChatGPT is to open/resume the old
+  chat. Once resumed, I’ll have that conversation’s context again.
+
+
